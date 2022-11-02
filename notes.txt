@@ -1,0 +1,61 @@
+O código precisa de comentários
+
+O relatório precisa dizer as dificuldades e soluções, referências e materiais e a ajuda de colegas, assim como a continuidade do trabalho
+
+O código precisa estar bem formatado e organizado
+
+Enunciado
+
+O código de implementação é um sistema de gerenciamento de coleções de mídia baseado na Standard Templates Library (deve ser escolhido um contêiner)
+
+Não basta só armazenar os dados em um contêiner e já usar os algoritmos e funções prontos
+
+Classe base: Mídia 
+
+Artista
+
+Título
+
+Faixas [vetor com os títulos]
+
+Lançamento (ano)
+
+Gênero
+
+Keywords [vetor de palavras-chave]
+
+Classe filha: CD
+
+Duração
+
+Volume
+
+Coletânea
+
+Classe filha: DVD 
+
+Formato de audio
+
+Formato de tela
+
+Legendas
+
+O sistema de gerenciamento de coleções de mídia consistirá no driver do programa, que conterá uma coleção de objetos da classe CD e uma coleção de objetos da classe DVD. Estas duas coleções deverão ser manipuladas e eventualmente transformadas em outras coleções para permitir as seguintes operações:
+
+Um CRUD
+
+Mostrar todos os CDs de um artista ordenados pela data
+
+Mostrar todos os DVDs de um artista ordenados pela data
+
+Mostrar todas as mídias (CDs e DVDs juntos) ordenados pela data
+
+Mostrar todas as mídias lançadas em um determinado ano
+
+Dado um título de CD e DVD, mostrar quais faixas ambos possuem em comum e quais só es
+
+Mostrar todas as mídias de determinado gênero, separando CDs de DVDs, ordenados alfabeticamente
+
+Exibir todos os keywords
+
+Fazer um programa inspirado no Last Fm, que mostra as funções dadas
