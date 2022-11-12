@@ -16,4 +16,5 @@ class CD: public Midia{
         int getDuracao();
         int getVolume();
         bool getColetanea();
+        void print();
 };

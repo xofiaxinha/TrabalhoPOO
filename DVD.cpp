@@ -28,3 +28,6 @@ string DVD::getFormatoTela(){
 vector<string> DVD::getLegendas(){
     return legendas;
 }
+void DVD::print(){
+  cout << getFormatoTela();
+}

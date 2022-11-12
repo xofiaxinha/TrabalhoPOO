@@ -27,3 +27,7 @@ int CD::getVolume(){
 bool CD::getColetanea(){
     return coletanea;
 }
+void CD::print(){
+  cout << '\n' << getArtista() << '\n';
+  cout << getColetanea();
+}

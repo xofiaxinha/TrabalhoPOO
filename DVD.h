@@ -17,4 +17,5 @@ class DVD: public Midia{
         string getFormatoAudio();
         string getFormatoTela();
         vector<string> getLegendas();
+        void print();
 };
