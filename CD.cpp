@@ -28,6 +28,15 @@ bool CD::getColetanea(){
     return coletanea;
 }
 void CD::print(){
-  cout << '\n' << getArtista() << '\n';
-  cout << getColetanea();
+    cout << "Artista: " << getArtista() << endl;
+    cout << "Titulo: " << getTitulo() << endl;
+    cout << "Ano: " << getAno() << endl;
+    cout << "Genero: " << getGenero() << endl;
+    cout << "Duracao: " << getDuracao() << endl;
+    cout << "Volume: " << getVolume() << endl;
+    if(getColetanea()){
+        cout << "Coletanea: Sim" << endl;}
+    else{
+        cout << "Coletanea: Nao" << endl;
+    }
 }

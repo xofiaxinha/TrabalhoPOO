@@ -1,31 +1,33 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 class Midia{
     private:
         string artista;
         string titulo;
-        string *faixas; //vetor de string para armazenar as faixas
-        int nFaixas; //numero de faixas
+        vector<string> faixas; //vetor de string para armazenar as faixas
         int ano;
         string genero;
-        string *palavrasChave; //ponteiro de string para armazenar as palavras chave
-        int nKeyword; //número de palavras-chave
+        vector<string> palavrasChave; //ponteiro de string para armazenar as palavras chave
     public:
+        int nFaixas; //numero de faixas
+        int nKeyword; //número de palavras-chave
         Midia(string artista, string titulo, int ano, string genero);
         void setArtista(string artista);
         void setTitulo(string titulo);
-        void setFaixas(string *faixas);
         void setAno(int ano);
         void setGenero(string genero);
-        void setPalavrasChave(string *palavrasChave);
-        void addFaixa(string faixa);
-        void addPalavraChave(string palavraChave);
+        void setFaixas(vector<string> faixas);
+        void setPalavrasChave(vector<string> palavrasChave);
         string getArtista();
         string getTitulo();
-        string *getFaixas();
         int getAno();
         string getGenero();
-        string *getPalavrasChave();
+        void printFaixas();
+        void prinntKeywords();
+        virtual void addFaixa(string);
+        virtual void addKeyword(string);
+        virtual void print() = 0;
 };

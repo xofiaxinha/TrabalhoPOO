@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <cstdlib>
 using namespace std;
 
 Midia::Midia(string artista, string titulo, int ano, string genero){
@@ -17,27 +16,11 @@ void Midia::setArtista(string artista){
 void Midia::setTitulo(string titulo){
     this->titulo = titulo;
 }
-void Midia::setFaixas(string *faixas){
-    this->faixas = faixas;
-}
 void Midia::setAno(int ano){
     this->ano = ano;
 }
 void Midia::setGenero(string genero){
     this->genero = genero;
-}
-void Midia::setPalavrasChave(string *palavrasChave){
-    this->palavrasChave = palavrasChave;
-}
-void Midia::addFaixa(string faixa){
-    faixas = (string*) realloc(faixas, sizeof(string) * (nFaixas + 1));
-    faixas[nFaixas] = faixa;
-    nFaixas++;
-}
-void Midia::addPalavraChave(string palavraChave){
-    palavrasChave = (string *) realloc(palavrasChave, sizeof(string) * (nKeyword + 1));
-    palavrasChave[nKeyword] = palavraChave;
-    nKeyword++;
 }
 string Midia::getArtista(){
     return artista;
@@ -45,15 +28,33 @@ string Midia::getArtista(){
 string Midia::getTitulo(){
     return titulo;
 }
-string* Midia::getFaixas(){
-    return faixas;
-}
 int Midia::getAno(){
     return ano;
 }
 string Midia::getGenero(){
     return genero;
 }
-string *Midia::getPalavrasChave(){
-    return palavrasChave;
+void Midia::printFaixas(){
+    for(int i = 0; i < nFaixas; i++){
+        cout << faixas[i] << endl;
+    }
+}
+void Midia::prinntKeywords(){
+    for(int i = 0; i < nKeyword; i++){
+        cout << palavrasChave[i] << endl;
+    }
+}
+void Midia::addFaixa(string faixa){
+    faixas.push_back(faixa);
+    nFaixas++;
+}
+void Midia::addKeyword(string keyword){
+    palavrasChave.push_back(keyword);
+    nKeyword++;
+}
+void Midia::setFaixas(vector<string> faixas){
+    this->faixas = faixas;
+}
+void Midia::setPalavrasChave(vector<string> palavrasChave){
+    this->palavrasChave = palavrasChave;
 }
