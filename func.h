@@ -14,10 +14,15 @@ void paraArq(vector<CD> cd);
 void mostrarOrdenadoData(vector<CD> v);
 }
 namespace dvd{
-void addDVD(vector<DVD> *v);
-void removeDVD(vector<DVD> *v);
-void listaDVDs(vector<DVD> dvd);
-void editarDVD(vector<DVD> *dvd);
-vector<DVD> lerArqDVD();
-void paraArqDVD(vector<DVD> dvd);
+void add(vector<DVD> *v);
+void remove(vector<DVD> *v);
+void lista(vector<DVD> dvd);
+void editar(vector<DVD> *dvd);
+vector<DVD> lerArq();
+void paraArq(vector<DVD> dvd);
+void mostrarOrdenadoData(vector<DVD> v);
 }
+void mostrarOrdenadoData(vector<CD> v, vector<DVD> d);
+void mostrarFaixasEmComum(CD cd, DVD dvd);
+void mostrarPorGenero(vector<CD> cd, vector<DVD> dvd);
+void exibirKeywords(vector<CD> cd, vector<DVD> dvd);

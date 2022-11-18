@@ -9,6 +9,7 @@
 #include "func.h"
 using namespace std;
 
+//funcoes de cd
 void cd::add(vector<CD> *v){
   cin.ignore(); //limpa o buffer do cin
   string artista;
@@ -97,12 +98,14 @@ void cd::remove(vector<CD> *v){
     cout << "Digite o titulo do CD:\n";
     string titulo;
     getline(cin, titulo);
-  
-    for(int i = 0; i < tam; i++){
-        if(v[i].getArtista() == artista && v[i].getTitulo() == titulo){
+    int i = 0;
+    for(vector<CD>::iterator it = v->begin(); it != v->end() ; it++){
+        i++;
+        CD auxiliar = *it;
+        if(auxiliar.getArtista() == artista && auxiliar.getTitulo() == titulo){
             cout << "\tCD a ser removido:\n"
                 << "=======================================\n";
-            v[i].print();
+            auxiliar.print();
             for(int j = i; j < v->size(); j++){
                 v[j] = v[j+1];
             }
@@ -113,35 +116,156 @@ void cd::remove(vector<CD> *v){
         }
     }cout << "CD nao encontrado.\n";
 } // ajeitar
+//funcoes auxiliares pra editar
+void editarArtista(Midia *cd){
+    cin.ignore();
+    cout << "Digite o novo nome do artista:\n";
+    string artista;
+    getline(cin, artista);
+    cd->setArtista(artista);
+}
+void editarTitulo(Midia *cd){
+    cin.ignore();
+    cout << "Digite o novo titulo do CD:\n";
+    string titulo;
+    getline(cin, titulo);
+    cd->setTitulo(titulo);
+}
+void editarFaixas(Midia *cd){
+    cin.ignore();
+    cout << "Deseja adicionar as faixas?\nN para não. ";
+    char op;
+    cin >> op;
+    //se o usuario desejar adicionar as faixas, o programa entra no loop, e se não quiser pula a instrução
+    vector<string> faixas;
+    if(op == 'n' || op == 'N'){
+        string p = "Não ha faixas cadastradas";
+        cout << p << '\n'; // mostra que não há faixas
+        faixas.push_back(p);}
+    cin.ignore(); // limpa o buffer
+    while(op != 'N' && op != 'n'){ // enquanto op não for não, insere faixa
+        cout << "Digite o nome da faixa:\n";
+        string faixa;
+        getline(cin, faixa);
+        faixas.push_back(faixa);
+        cout << "Deseja adicionar mais faixas?\nN para não. ";
+        cin >> op;
+        cin.ignore(); //limpa o buffer do cin
+    }
+    cd->setFaixas(faixas);
+}
+void editarAno(Midia *cd){
+    cin.ignore();
+    cout << "Digite o novo ano de lançamento:\n";
+    int ano;
+    cin >> ano;
+    cd->setAno(ano);
+}
+void editarGenero(Midia *cd){
+    cin.ignore();
+    cout << "Digite o novo genero:\n";
+    string genero;
+    cin >> genero;
+    cd->setGenero(genero);
+}
+void editarPalavrasChave(Midia *cd){
+    cin.ignore();
+    cout << "Deseja adicionar palavras-chave?\nN para não. ";
+    char op;
+    cin >> op;
+    //se o usuario desejar adicionar as palavras-chave, o programa entra no loop, e se não quiser pula a instrução
+    vector<string> palavrasChave;
+    if(op == 'n' || op == 'N'){
+        string k = "Não ha palavras-chave disponiveis";
+        cout << k << '\n';
+        palavrasChave.push_back(k);
+    }
+    cin.ignore();
+    while(op != 'N' && op != 'n'){
+        cout << "Digite a palavra-chave:\n";
+        string palavraChave;
+        cin >> palavraChave;
+        palavrasChave.push_back(palavraChave);
+        cout << "Deseja adicionar mais palavras-chave?\nN para não. ";
+        cin >> op;
+    }
+    cd->setPalavrasChave(palavrasChave);
+}
+void editarDuracao(CD *cd){
+    cin.ignore();
+    cout << "Digite a nova duração do CD:\n";
+    int duracao;
+    cin >> duracao;
+    cd->setDuracao(duracao);
+}
+void editarVolume(CD *cd){
+    cin.ignore();
+    cout << "Digite o novo volume do CD:\n";
+    int volume;
+    cin >> volume;
+    cd->setVolume(volume);
+}
+void editarColetanea(CD *cd){
+    cin.ignore();
+    cout << "Digite o novo valor da coletanea:\n";
+    bool coletanea;
+    cin >> coletanea;
+    cd->setColetanea(coletanea);
+}
 void cd::editar(vector<CD> *cd){
     cin.ignore();
     cout << "Digite o nome do CD que deseja editar:\n";
     string titulo;
     getline(cin, titulo);
-    for(int i = 0; i<cd->size(); i++){
-        if(cd[i]->getTitulo() == titulo){
-            ///so eh possivel editar as palavras-chave
-            cout << "Deseja adicionar palavras-chave?\nN para não. ";
+    for(vector<CD>::iterator it = cd->begin(); it != cd->end(); it++){
+        CD auxiliar = *it;
+        if(auxiliar.getTitulo() == titulo){
+            cout << "Escolha o que você deseja editar:\n"
+                << "1 - Artista\n"
+                << "2 - Titulo\n"
+                << "3 - Faixas\n"
+                << "4 - Ano de lançamento\n"
+                << "5 - Genero\n"
+                << "6 - Palavras-chave\n"
+                << "7 - Duração\n"
+                << "8 - Volume\n"
+                << "9 - Coletânea\n";
             int op;
             cin >> op;
-            //se o usuario desejar adicionar as palavras-chave, o programa entra no loop, e se não quiser pula a instrução
-            vector<string> palavrasChave;
-            if(op == 'n' || op == 'N'){
-                string k = "Não ha palavras-chave disponiveis";
-                palavrasChave.push_back(k);
+            cin.ignore();
+            switch(op){
+                case 1:
+                    editarArtista(&auxiliar);
+                    break;
+                case 2:
+                    editarTitulo(&auxiliar);
+                    break;
+                case 3:
+                    editarFaixas(&auxiliar);
+                    break;
+                case 4:
+                    editarAno(&auxiliar);
+                    break;
+                case 5:
+                    editarGenero(&auxiliar);
+                    break;
+                case 6:
+                    editarPalavrasChave(&auxiliar);
+                    break;
+                case 7:
+                    editarDuracao(&auxiliar);
+                    break;
+                case 8:
+                    editarVolume(&auxiliar);
+                    break;
+                case 9:
+                    editarColetanea(&auxiliar);
+                    break;
+                default:
+                    cout << "Opção inválida.\n";
+                    break;
             }
-            while(op != 'N' || op != 'n'){
-                cin.ignore();
-                cout << "Digite a palavra-chave:\n";
-                string palavraChave;
-                cin >> palavraChave;
-                palavrasChave.push_back(palavraChave);
-                cout << "Deseja adicionar mais palavras-chave?\nN para não. ";
-                cin >> op;
-            }
-            cd[i]->setPalavrasChave(palavrasChave);
-            cd[i]->print();
-            return;
+            *it = auxiliar;
         }
     }
 } // ajeitar
@@ -231,7 +355,7 @@ void cd::paraArq(vector<CD> cd){
         for(int j = 0; j < cd[i].nFaixas; j++){
             f << faixas[j] << '\n';
         }
-        vector<string> keywords = cd[i].getKeywords();
+        vector<string> keywords = cd[i].getPalavrasChave();
         f << cd[i].nKeyword << '\n';
         for(int j = 0; j < cd[i].nKeyword; j++){
             f << keywords[j] << '\n';
@@ -256,9 +380,10 @@ void cd::mostrarOrdenadoData(vector<CD> v){
     auxiliar[i].print();
   }
 } // ajeitar
-namespace dvd{
-void addDVD(vector<DVD> *v){
-  cin.ignore(); //limpa o buffer do cin
+
+//funcoes de dvd
+void dvd::add(vector<DVD> *v){
+    cin.ignore(); //limpa o buffer do cin
   string artista;
   cout << "Digite o nome do artista:\n";
   getline(cin, artista); //pega a string artista
@@ -312,106 +437,123 @@ void addDVD(vector<DVD> *v){
       cout << "Deseja adicionar mais palavras-chave?\nN para não. ";
       cin >> op;
   }
-    cout << "Digite o formato de audio do DVD:\n";
-    string formatoAudio;
-    cin >> formatoAudio;
-    cout << "Digite o formato de video do DVD:\n";
-    string formatoVideo;
-    cin >> formatoVideo;
-    DVD dvd(artista, titulo, ano, genero, formatoAudio, formatoVideo);
-    dvd.setFaixas(faixas);
-    dvd.setPalavrasChave(palavrasChave);
-    dvd.nFaixas = faixas.size();
-    dvd.nKeyword = palavrasChave.size();
-    v->push_back(dvd);
+  cout << "Digite o formato de audio:\n";
+    string audio;
+    cin >> audio;
+    cout << "Digite o formato de video:\n";
+    string video;
+    cin >> video;
+    DVD aux(artista, titulo, ano, genero, audio, video);
+    aux.setPalavrasChave(palavrasChave);
+    aux.setFaixas(faixas);
+    v->push_back(aux);
+    cout << "DVD adicionado com sucesso!\n";
 }
-void removeDVD(vector<DVD> *v){
+void dvd::remove(vector<DVD> *v){
     cin.ignore();
+    int tam = v->size();
     cout << "Digite o nome do artista:\n";
     string artista;
     getline(cin, artista);
     cout << "Digite o titulo do DVD:\n";
     string titulo;
     getline(cin, titulo);
-    for(int i = 0; i < v->size(); i++){
-        if(v[i]->getArtista() == artista && v[i]->getTitulo() == titulo){
+    int i = 0;
+    for(vector<DVD>::iterator it = v->begin(); it != v->end() ; it++){
+        i++;
+        DVD auxiliar = *it;
+        if(auxiliar.getArtista() == artista && auxiliar.getTitulo() == titulo){
             cout << "\tDVD a ser removido:\n"
                 << "=======================================\n";
-            v[i]->print();
+            auxiliar.print();
             for(int j = i; j < v->size(); j++){
                 v[j] = v[j+1];
             }
             v->pop_back();
             cout << "DVD removido com sucesso!\n";
+            break;
             return;
         }
-    }cout << "DVD não encontrado!\n";
-} // ajeitar
-void editarDVD(vector<DVD> *dvd){
-    cin.ignore();
-    cout << "Digite o nome do DVD que deseja editar:\n";
-    string titulo;
-    getline(cin, titulo);
-    for(int i = 0; i<dvd->size(); i++){
-        if(dvd[i]->getTitulo() == titulo){
-            ///so eh possivel editar o formato de audio e video, e as palavras-chave
-            cout << "O que deseja editar?\n"
-                << "1 - Formato de audio\n"
-                << "2 - Formato de video\n"
-                << "3 - Palavras-chave\n";
-            int op;
-            cin >> op;
-            if(op == 1){
-                cout << "Digite o novo formato de audio:\n";
-                string formatoAudio;
-                cin >> formatoAudio;
-                dvd[i]->setFormatoAudio(formatoAudio);
-            }else if(op == 2){
-                cout << "Digite o novo formato de video:\n";
-                string formatoVideo;
-                cin >> formatoVideo;
-                dvd[i]->setFormatoTela(formatoVideo);
-            }else if(op == 3){
-                cout << "Deseja adicionar palavras-chave?\nN para não. ";
-                cin >> op;
-                //se o usuario desejar adicionar as palavras-chave, o programa entra no loop, e se não quiser pula a instrução
-                vector<string> palavrasChave;
-                if(op == 'n' || op == 'N'){
-                    string k = "Não ha palavras-chave disponiveis";
-                    palavrasChave.push_back(k);
-                }
-                while(op != 'N' || op != 'n'){
-                    cin.ignore();
-                    cout << "Digite a palavra-chave:\n";
-                    string palavraChave;
-                    cin >> palavraChave;
-                    palavrasChave.push_back(palavraChave);
-                    cout << "Deseja adicionar mais palavras-chave?\nN para não. ";
-                    cin >> op;
-                }
-                dvd[i]->setPalavrasChave(palavrasChave);
-            }
-            dvd[i]->print();
-            return;
-        }
-    }
-} // ajeitar
-void listaCDs(vector<CD> cd){
-    cout << "Lista de CDs:\n";
-    cout << "=======================================\n";
-    for(int i = 0; i < cd.size(); i++){
-        cout << cd[i].getTitulo() << " por " << cd[i].getArtista() << '\n';
-    }
+    }cout << "DVD nao encontrado.\n";
 }
-void listaDVDs(vector<DVD> dvd){
+void dvd::lista(vector<DVD> dvd){
     cout << "Lista de DVDs:\n";
     cout << "=======================================\n";
     for(int i = 0; i < dvd.size(); i++){
         cout << dvd[i].getTitulo() << " por " << dvd[i].getArtista() << '\n';
     }
 }
-vector<DVD> lerArqDVD(){
-  ifstream f;
+void editarFormatoAudio(DVD *dvd){
+    cin.ignore();
+    cout << "Digite o novo formato de audio:\n";
+    string audio;
+    getline(cin, audio);
+    dvd->setFormatoAudio(audio);
+    cout << "Formato de audio alterado com sucesso!\n";
+}
+void editarFormatoVideo(DVD *dvd){
+    cin.ignore();
+    cout << "Digite o novo formato de tela:\n";
+    string tela;
+    getline(cin, tela);
+    dvd->setFormatoTela(tela);
+    cout << "Formato de tela alterado com sucesso!\n";
+}
+void dvd::editar(vector<DVD> *dvd){
+    cin.ignore();
+    cout << "Digite o nome do DVD que deseja editar:\n";
+    string titulo;
+    getline(cin, titulo);
+    for(vector<DVD>::iterator it = dvd->begin(); it != dvd->end(); it++){
+        DVD auxiliar = *it;
+        if(auxiliar.getTitulo() == titulo){
+            cout << "Escolha o que você deseja editar:\n"
+                << "1 - Artista\n"
+                << "2 - Titulo\n"
+                << "3 - Faixas\n"
+                << "4 - Ano de lançamento\n"
+                << "5 - Genero\n"
+                << "6 - Palavras-chave\n"
+                << "7 - Formato de audio\n"
+                << "8 - Formato de tela\n";
+            int op;
+            cin >> op;
+            cin.ignore();
+            switch(op){
+                case 1:
+                    editarArtista(&auxiliar);
+                    break;
+                case 2:
+                    editarTitulo(&auxiliar);
+                    break;
+                case 3:
+                    editarFaixas(&auxiliar);
+                    break;
+                case 4:
+                    editarAno(&auxiliar);
+                    break;
+                case 5:
+                    editarGenero(&auxiliar);
+                    break;
+                case 6:
+                    editarPalavrasChave(&auxiliar);
+                    break;
+                case 7:
+                    editarFormatoAudio(&auxiliar);
+                    break;
+                case 8:
+                    editarFormatoVideo(&auxiliar);
+                    break;
+                default:
+                    cout << "Opção inválida.\n";
+                    break;
+            }
+            *it = auxiliar;
+        }
+    }
+}
+vector<DVD> dvd::lerArq(){
+ifstream f;
   f.open("DVD.txt", ios::in);
   if(!f.is_open()) {throw runtime_error("ERRO\n");}
 
@@ -419,9 +561,12 @@ vector<DVD> lerArqDVD(){
   string titulo;
   int ano;
   string genero;
-  string formatoAudio;
-  string formatoTela;
+  int duracao;
+  int volume;
+  bool coletanea;
   vector<DVD> dvd;
+  string audio;
+    string video;
   string sAno; // string auxiliar pra usar stringstream
   while(!f.eof()){
     getline(f, artista);
@@ -430,8 +575,8 @@ vector<DVD> lerArqDVD(){
       stringstream sa(sAno);  //le um int
       sa >> ano;               //para ano
     getline(f, genero);
-    getline(f, formatoAudio);
-    getline(f, formatoTela);
+    getline(f, audio);
+    getline(f, video);
     string sPalavrasChave;
     getline(f, sPalavrasChave);
     vector<string> palavrasChave;
@@ -453,7 +598,7 @@ vector<DVD> lerArqDVD(){
         faixas.push_back(sFaixas);
     }
     cout << "Arquivo lido!";
-    DVD aux(artista, titulo, ano, genero, formatoAudio, formatoTela);
+    DVD aux(artista, titulo, ano, genero, audio, video);
     aux.setPalavrasChave(palavrasChave);
     aux.setFaixas(faixas);
     dvd.push_back(aux);
@@ -461,7 +606,7 @@ vector<DVD> lerArqDVD(){
     f.close();
     return dvd;
 }
-void paraArqDVD(vector<DVD> dvd){
+void dvd::paraArq(vector<DVD> dvd){
     ofstream f;
     f.open("DVD.txt", ios::out);
     if(!f.is_open()) {throw runtime_error("ERRO\n");}
@@ -472,18 +617,76 @@ void paraArqDVD(vector<DVD> dvd){
         f << dvd[i].getGenero() << '\n';
         f << dvd[i].getFormatoAudio() << '\n';
         f << dvd[i].getFormatoTela() << '\n';
-        vector<string> faixas = dvd[i].getFaixas();
-        f << dvd[i].nFaixas << '\n';
-        for(int j = 0; j < dvd[i].nFaixas; j++){
-            f << faixas[j] << '\n';
-        }
-        vector<string> keywords = dvd[i].getKeywords();
         f << dvd[i].nKeyword << '\n';
-        for(int j = 0; j < dvd[i].nKeyword; j++){
-            f << keywords[j] << '\n';
+        vector<string> palavrasChave = dvd[i].getPalavrasChave();
+        f << palavrasChave.size() << '\n';
+        for(int j = 0; j < palavrasChave.size(); j++){
+            f << palavrasChave[j] << '\n';
+        }
+        f << dvd[i].nFaixas << '\n';
+        vector<string> faixas = dvd[i].getFaixas();
+        f << faixas.size() << '\n';
+        for(int j = 0; j < faixas.size(); j++){
+            f << faixas[j] << '\n';
         }
     }
     f.close();
-
 }
+void dvd::mostrarOrdenadoData(vector<DVD> v){
+    vector<DVD> aux = v;
+    for(int i = 0; i < aux.size(); i++){
+        for(int j = i + 1; j < aux.size(); j++){
+            if(aux[i].getAno() > aux[j].getAno()){
+                DVD auxiliar = aux[i];
+                aux[i] = aux[j];
+                aux[j] = auxiliar;
+            }
+        }
+    }
+    for(int i = 0; i < aux.size(); i++){
+        aux[i].print();
+    }
 }
+//funcoes gerais
+void mostrarOrdenadoData(vector<CD> v, vector<DVD> d){
+    bool travaCD = 0, travaDVD = 0;
+    int i=0, j=0;
+    //ordenando os vetores
+    for(int i = 0; i < v.size(); i++){
+        for(int j = i + 1; j < v.size(); j++){
+            if(v[i].getAno() > v[j].getAno()){
+                CD auxiliar = v[i];
+                v[i] = v[j];
+                v[j] = auxiliar;
+            }
+        }
+    }
+    for(int i = 0; i < d.size(); i++){
+        for(int j = i + 1; j < d.size(); j++){
+            if(d[i].getAno() > d[j].getAno()){
+                DVD auxiliar = d[i];
+                d[i] = d[j];
+                d[j] = auxiliar;
+            }
+        }
+    }
+    i = 0; j = 0;
+    while(1){
+        if(travaCD = 1 && travaDVD == 1) break;
+        if(v[i].getAno() < d[j].getAno() && travaCD == 0){
+            v[i].print();
+            i++;
+            if(i == v.size()) travaCD = 1;
+        }
+        else{
+            d[j].print();
+            j++;
+            if(j == d.size()) travaDVD = 1;
+        }
+    }
+}
+void mostrarFaixasEmComum(CD cd, DVD dvd);
+void mostrarPorGenero(vector<CD> cd, vector<DVD> dvd);
+void exibirKeywords(vector<CD> cd, vector<DVD> dvd);
+void ordemAlfabetica(vector<Midia> *midia);
+    
