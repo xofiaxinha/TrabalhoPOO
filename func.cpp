@@ -685,8 +685,35 @@ void mostrarOrdenadoData(vector<CD> v, vector<DVD> d){
         }
     }
 }
-void mostrarFaixasEmComum(CD cd, DVD dvd);
-void mostrarPorGenero(vector<CD> cd, vector<DVD> dvd);
+void mostrarFaixasEmComum(CD cd, DVD dvd){
+    vector<string> cdFaixas = cd.getFaixas();
+    vector<string> dvdFaixas = dvd.getFaixas();
+    for(int i = 0; i < cd.nFaixas; i++){
+        for(int j = 0; j < cd.nFaixas; j++){
+            if(cdFaixas[i] == dvdFaixas[j]){
+                cout << cdFaixas[i] << '\n';
+            }
+        }
+    }
+}
+void mostrarPorGenero(vector<CD> cd, vector<DVD> dvd){
+    vector<string> generosCD;
+    generosCD.push_back(cd[0].getGenero());
+    for(int i = 0; i < cd.size(); i++){
+        for(int j = 0; j < generosCD.size(); j++){
+            if(cd[i].getGenero() == generosCD[j]) break;
+            if(j == generosCD.size() - 1) generosCD.push_back(cd[i].getGenero());
+        }
+    }
+    vector<string> generosDVD;
+    generosDVD.push_back(dvd[0].getGenero());
+    for(int i = 0; i < dvd.size(); i++){
+        for(int j = 0; j < generosDVD.size(); j++){
+            if(dvd[i].getGenero() == generosDVD[j]) break;
+            if(j == generosDVD.size() - 1) generosDVD.push_back(dvd[i].getGenero());
+        }
+    }
+}
 void exibirKeywords(vector<CD> cd, vector<DVD> dvd);
 void ordemAlfabetica(vector<Midia> *midia);
     
