@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include <vector>
@@ -25,8 +26,10 @@ class Midia{
         string getTitulo();
         int getAno();
         string getGenero();
+        vector<string> getFaixas();
+        vector<string> getPalavrasChave();
         void printFaixas();
-        void prinntKeywords();
+        void printKeywords();
         virtual void addFaixa(string);
         virtual void addKeyword(string);
         virtual void print() = 0;

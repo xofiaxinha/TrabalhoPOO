@@ -39,7 +39,7 @@ void Midia::printFaixas(){
         cout << faixas[i] << endl;
     }
 }
-void Midia::prinntKeywords(){
+void Midia::printKeywords(){
     for(int i = 0; i < nKeyword; i++){
         cout << palavrasChave[i] << endl;
     }
@@ -57,4 +57,10 @@ void Midia::setFaixas(vector<string> faixas){
 }
 void Midia::setPalavrasChave(vector<string> palavrasChave){
     this->palavrasChave = palavrasChave;
+}
+vector<string> Midia::getFaixas(){
+  return faixas;
+}
+vector<string> Midia::getPalavrasChave(){
+  return palavrasChave;
 }
