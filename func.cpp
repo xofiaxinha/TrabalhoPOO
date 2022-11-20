@@ -308,16 +308,6 @@ vector<CD> cd::lerArq(){
      getline(f, sColetanea);        //bloco que
       stringstream sc(sColetanea);  //le um bool
       sc >> coletanea;         //para coletanea
-    string sPalavrasChave;
-    getline(f, sPalavrasChave);
-    vector<string> palavrasChave;
-    stringstream sp(sPalavrasChave);
-    int nPalavrasChave;
-    sp >> nPalavrasChave;
-    for(int i = 0; i < nPalavrasChave; i++){
-        getline(f, sPalavrasChave);
-        palavrasChave.push_back(sPalavrasChave);
-    }
     string sFaixas;
     getline(f, sFaixas);
     vector<string> faixas;
@@ -328,7 +318,18 @@ vector<CD> cd::lerArq(){
         getline(f, sFaixas);
         faixas.push_back(sFaixas);
     }
-    cout << "Arquivo lido!";
+    string sPalavrasChave;
+    getline(f, sPalavrasChave);
+    vector<string> palavrasChave;
+    stringstream sp(sPalavrasChave);
+    int nPalavrasChave;
+    sp >> nPalavrasChave;
+    for(int i = 0; i < nPalavrasChave; i++){
+        getline(f, sPalavrasChave);
+        palavrasChave.push_back(sPalavrasChave);
+    }
+    
+    //cout << "Arquivo lido!";
     CD aux(artista, titulo, ano, genero, duracao, volume, coletanea);
     aux.setPalavrasChave(palavrasChave);
     aux.setFaixas(faixas);
@@ -351,7 +352,7 @@ void cd::paraArq(vector<CD> cd){
         f << cd[i].getColetanea() << '\n';
         f << cd[i].nFaixas << '\n';
         vector<string> faixas = cd[i].getFaixas();
-        f << cd[i].nFaixas << '\n';
+        //f << cd[i].nFaixas << '\n';
         for(int j = 0; j < cd[i].nFaixas; j++){
             f << faixas[j] << '\n';
         }
@@ -597,7 +598,7 @@ ifstream f;
         getline(f, sFaixas);
         faixas.push_back(sFaixas);
     }
-    cout << "Arquivo lido!";
+    //cout << "Arquivo lido!";
     DVD aux(artista, titulo, ano, genero, audio, video);
     aux.setPalavrasChave(palavrasChave);
     aux.setFaixas(faixas);
@@ -619,13 +620,13 @@ void dvd::paraArq(vector<DVD> dvd){
         f << dvd[i].getFormatoTela() << '\n';
         f << dvd[i].nKeyword << '\n';
         vector<string> palavrasChave = dvd[i].getPalavrasChave();
-        f << palavrasChave.size() << '\n';
+        //f << palavrasChave.size() << '\n';
         for(int j = 0; j < palavrasChave.size(); j++){
             f << palavrasChave[j] << '\n';
         }
         f << dvd[i].nFaixas << '\n';
         vector<string> faixas = dvd[i].getFaixas();
-        f << faixas.size() << '\n';
+        //f << faixas.size() << '\n';
         for(int j = 0; j < faixas.size(); j++){
             f << faixas[j] << '\n';
         }

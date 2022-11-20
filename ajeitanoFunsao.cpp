@@ -7,8 +7,8 @@
 //#include "func.h"
 using namespace std;
 int main(){
-    vector<CD> cd;
-    vector<DVD> dvd;
+    vector<CD> cd;// = cd::lerArq();
+    vector<DVD> dvd;// = dvd::lerArq();
     int opcao;
     do{
         cout << "Adicionando pra testar\n";
@@ -37,10 +37,8 @@ int main(){
             << "2 - Remover\n"
             << "3 - Listar\n"
             << "4 - Editar\n"
-            << "5 - Ler do arquivo\n"
-            << "6 - Escrever no arquivo\n"
-            << "7 - Mostrar ordenado por data\n"
-            << "8 - Sair\n";
+            << "5 - Mostrar ordenado por data\n"
+            << "6 - Sair\n";
         cin >> opcao;
         switch(opcao){
             case 1:
@@ -56,21 +54,15 @@ int main(){
                 cd::editar(&cd);
                 break;
             case 5:
-                cd = cd::lerArq();
-                break;
-            case 6:
-                cd::paraArq(cd);
-                break;
-            case 7:
                 cd::mostrarOrdenadoData(cd);
                 break;
-            case 8:
+            case 6:
                 break;
             default:
                 cout << "Opcao invalida" << endl;
         }
         cout << "----------------------------------------" << endl;
-    }while(opcao != 8);
+    }while(opcao != 6);
 
     do{
         cout << "2 - DVD" << endl;
@@ -79,10 +71,8 @@ int main(){
             << "2 - Remover\n"
             << "3 - Listar\n"
             << "4 - Editar\n"
-            << "5 - Ler do arquivo\n"
-            << "6 - Escrever no arquivo\n"
-            << "7 - Mostrar ordenado por data\n"
-            << "8 - Sair\n";
+            << "5 - Mostrar ordenado por data\n"
+            << "6 - Sair\n";
         cin >> opcao;
         switch(opcao){
             case 1:
@@ -98,20 +88,16 @@ int main(){
                 dvd::editar(&dvd);
                 break;
             case 5:
-                dvd = dvd::lerArq();
-                break;
-            case 6:
-                dvd::paraArq(dvd);
-                break;
-            case 7:
                 dvd::mostrarOrdenadoData(dvd);
                 break;
-            case 8:
+            case 6:
                 break;
             default:
                 cout << "Opcao invalida" << endl;
         }
         cout << "----------------------------------------" << endl;
-    }while(opcao != 8);
+    }while(opcao != 6);
+     cd::paraArq(cd);
+     dvd::paraArq(dvd);
     return 0;
 }
