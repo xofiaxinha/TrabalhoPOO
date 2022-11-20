@@ -7,8 +7,8 @@
 //#include "func.h"
 using namespace std;
 int main(){
-    vector<CD> cd;// = cd::lerArq();
-    vector<DVD> dvd;// = dvd::lerArq();
+    vector<CD> cd = cd::lerArq();
+    vector<DVD> dvd = dvd::lerArq();
     int opcao;
     do{
         cout << "Adicionando pra testar\n";
@@ -97,6 +97,7 @@ int main(){
         }
         cout << "----------------------------------------" << endl;
     }while(opcao != 6);
+
      cd::paraArq(cd);
      dvd::paraArq(dvd);
     return 0;
