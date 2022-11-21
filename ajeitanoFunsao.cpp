@@ -8,7 +8,7 @@
 using namespace std;
 int main(){
     vector<CD> cd = cd::lerArq();
-    vector<DVD> dvd = dvd::lerArq();
+    vector<DVD> dvd;// = dvd::lerArq();
     int opcao;
     do{
         cout << "Adicionando pra testar\n";
@@ -72,7 +72,9 @@ int main(){
             << "3 - Listar\n"
             << "4 - Editar\n"
             << "5 - Mostrar ordenado por data\n"
-            << "6 - Sair\n";
+            << "6 - Mostrar por Genero\n"
+            << "7 - Mostrar por Keywords\n"
+            << "8 - Sair\n";
         cin >> opcao;
         switch(opcao){
             case 1:
@@ -98,7 +100,35 @@ int main(){
         cout << "----------------------------------------" << endl;
     }while(opcao != 6);
 
-     cd::paraArq(cd);
-     dvd::paraArq(dvd);
+    do{
+        cout << "3 - Funcoes gerais\n";
+        cout << "Digite uma opcao para testar:\n"
+            << "1 - Mostrar ordenado por data\n"
+            << "2 - Mostrar faixas em comum\n"
+            << "3 - Mostrar por Genero\n"
+            << "4 - Mostrar por Keywords\n"
+            << "5 - Sair\n";
+        cin >> opcao;
+        switch(opcao){
+            case 1:
+                mostrarOrdenadoData(cd, dvd);
+                break;
+            case 2:
+                break;
+            case 3:
+                mostrarPorGenero(cd, dvd);
+                break;
+            case 4:
+                exibirKeywords(cd, dvd);
+                break;
+            case 5:
+                break;
+            default:
+                cout << "Opcao invalida" << endl;
+        }
+        cout << "----------------------------------------" << endl;
+    }while(opcao != 5);
+    cd::paraArq(cd);
+    dvd::paraArq(dvd);
     return 0;
 }
