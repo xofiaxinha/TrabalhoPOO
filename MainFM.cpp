@@ -9,7 +9,7 @@
 #include "DVD.h"
 #include "MainFM.h"
 using namespace std;
-
+// TODO: Formatar as funções para que fiquem mais legíveis
 //funções auxiliares que utilizam template
 template <typename T>
 void verMais(vector<T> m){
@@ -35,110 +35,115 @@ void ordemAlfabetica(vector<T> *a){
         }
     }
 } 
+
 //funcoes de cd
 void cd::add(vector<CD> *v){
+    system("clear");
+    cout << "----------------------------------------\n";
+    cout << "\t- Adicionando CD.fm -\n";
+    cout << "----------------------------------------\n";
+    cin.ignore(); //limpa o buffer do cin
     
-  cin.ignore(); //limpa o buffer do cin
-  string artista;
-  cout << "Digite o nome do artista:\n";
-  getline(cin, artista); //pega a string artista
-  string titulo;
-  cout << "Digite o titulo do CD:\n";
-  getline(cin, titulo); //pega a string texto
-  
-  cout << "Deseja adicionar as faixas?\nN para não. ";
-  char op;
-  cin >> op;
-  //se o usuario desejar adicionar as faixas, o programa entra no loop, e se não quiser pula a instrução
-  int nFaixas = 0;
-  vector<string> faixas;
-  if(op == 'n' || op == 'N'){
-      string p = "Não ha faixas cadastradas";
-      nFaixas++;
-      cout << p << '\n'; // mostra que não há faixas
-      faixas.push_back(p);}
-  cin.ignore(); // limpa o buffer
-  while(op != 'N' && op != 'n'){ // enquanto op não for não, insere faixa
-      cout << "Digite o nome da faixa:\n";
-      string faixa;
-      getline(cin, faixa);
-      faixas.push_back(faixa);
-      nFaixas++;
-      cout << "Deseja adicionar mais faixas?\nN para não. ";
-      cin >> op;
-      cin.ignore(); //limpa o buffer do cin
-  }
+    string artista;
+    cout << "Digite o nome do artista:\n";
+    getline(cin, artista); //pega a string artista
+    string titulo;
+    cout << "Digite o titulo do CD:\n";
+    getline(cin, titulo); //pega a string texto
 
-  cout << "Digite o ano de lançamento:\n";
-  int ano;
-  cin >> ano;
-  
-  cout << "Digite o genero:\n";
-  string genero;
-  cin >> genero;
+    cout << "Deseja adicionar as faixas?\nN para não. ";
+    char op;
+    cin >> op;
+        //se o usuario desejar adicionar as faixas, o programa entra no loop, e se não quiser pula a instrução
+    vector<string> faixas;
+        if(op == 'n' || op == 'N'){
+            string p = "Não ha faixas cadastradas";
+            cout << p << '\n'; // mostra que não há faixas
+            faixas.push_back(p);
+        }
+    cin.ignore(); // limpa o buffer
+        while(op != 'N' && op != 'n'){ // enquanto op não for não, insere faixa
+            cout << "Digite o nome da faixa:\n";
+            string faixa;
+            getline(cin, faixa);
+            faixas.push_back(faixa);
+            cout << "Deseja adicionar mais faixas?\nN para não. ";
+            cin >> op;
+            cin.ignore(); //limpa o buffer do cin
+        }
 
-  cout << "Deseja adicionar palavras-chave?\nN para não. ";
-  cin >> op;
-  int nKeywords = 0;
-  //se o usuario desejar adicionar as palavras-chave, o programa entra no loop, e se não quiser pula a instrução
-  vector<string> palavrasChave;
-  if(op == 'n' || op == 'N'){
-      string k = "Não ha palavras-chave disponiveis";
-      cout << k << '\n';
-      nKeywords++;
-      palavrasChave.push_back(k);
-    }
-  cin.ignore();
-  while(op != 'N' && op != 'n'){
-      cout << "Digite a palavra-chave:\n";
-      string palavraChave;
-      cin >> palavraChave;
-      palavrasChave.push_back(palavraChave);
-      nKeywords++;
-      cout << "Deseja adicionar mais palavras-chave?\nN para não. ";
-      cin >> op;
-  }
+    cout << "Digite o ano de lançamento:\n";
+    int ano;
+    cin >> ano;
 
-  cout << "Digite a duração do CD:\n";
-  int duracao;
-  cin >> duracao;
+    cout << "Digite o genero:\n";
+    string genero;
+    cin >> genero;
 
-  cout << "Digite o volume do CD:\n";
-  int volume;
-  cin >> volume;
+    cout << "Deseja adicionar palavras-chave?\nN para não. ";
+    cin >> op;
+    //se o usuario desejar adicionar as palavras-chave, o programa entra no loop, e se não quiser pula a instrução
+    vector<string> palavrasChave;
+        if(op == 'n' || op == 'N'){
+            string k = "Não ha palavras-chave disponiveis";
+            cout << k << '\n';
+            palavrasChave.push_back(k);
+        }
+    cin.ignore();
+        while(op != 'N' && op != 'n'){
+            cout << "Digite a palavra-chave:\n";
+            string palavraChave;
+            cin >> palavraChave;
+            palavrasChave.push_back(palavraChave);
+            cout << "Deseja adicionar mais palavras-chave?\nN para não. ";
+            cin >> op;
+        }
 
-  cout << "O CD faz parte de uma coletânea?\n0 para não. ";
-  bool coletanea;
-  cin >> coletanea;
-  
-  //declara um objeto do tipo CD
-  CD cd(artista, titulo, ano, genero, duracao, volume, coletanea);
-  cd.setFaixas(faixas); // pôe as faixas
-  cd.setPalavrasChave(palavrasChave); // pôe as palavras-chave
-  cd.nFaixas = nFaixas;
-  cd.nKeyword = nKeywords;
-  
-  v->push_back(cd); //empurra o novo cd no vetor
-  //mensagem de confirmação
-  cout << "- CD adicionado com sucesso!\n";
-  ordemAlfabetica(v);
+    cout << "Digite a duração do CD:\n";
+    int duracao;
+    cin >> duracao;
+
+    cout << "Digite o volume do CD:\n";
+    int volume;
+    cin >> volume;
+
+    cout << "O CD faz parte de uma coletânea?\n0 para não. ";
+    bool coletanea;
+    cin >> coletanea;
+
+    //declara um objeto do tipo CD
+    CD cd(artista, titulo, ano, genero, duracao, volume, coletanea);
+    cd.setFaixas(faixas); // pôe as faixas
+    cd.setPalavrasChave(palavrasChave); // pôe as palavras-chave
+
+    v->push_back(cd); //empurra o novo cd no vetor
+    //mensagem de confirmação
+    cout << "- CD adicionado com sucesso!\n";
+    ordemAlfabetica(v);
+    system("pause");
 }
 void cd::remove(vector<CD> *v){
+    system("clear");
+    cout << "----------------------------------------\n";
+    cout << "\t- Removendo CD-\n";
+    cout << "----------------------------------------\n";
     cin.ignore();
-    int tam = v->size();
+    int tam = v->size(); //pega o tamanho do vetor
+
     cout << "Digite o nome do artista:\n";
     string artista;
     getline(cin, artista);
     cout << "Digite o titulo do CD:\n";
     string titulo;
     getline(cin, titulo);
+
     int i = 0;
     for(vector<CD>::iterator it = v->begin(); it != v->end() ; it++){
         i++;
         CD auxiliar = *it;
         if(auxiliar.getArtista() == artista && auxiliar.getTitulo() == titulo){
             cout << "\tCD a ser removido:\n"
-                << "=======================================\n";
+                << "----------------------------------------\n";
             auxiliar.print();
             for(int j = i; j < v->size(); j++){
                 v[j] = v[j+1];
@@ -149,6 +154,7 @@ void cd::remove(vector<CD> *v){
             return;
         }
     }cout << "CD nao encontrado.\n";
+    system("pause");
 } // ajeitar
 //funcoes auxiliares pra editar
 void editarArtista(Midia *m){
