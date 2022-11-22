@@ -26,3 +26,4 @@ void mostrarOrdenadoData(vector<CD> v, vector<DVD> d);
 void mostrarFaixasEmComum(CD cd, DVD dvd);
 void mostrarPorGenero(vector<CD> cd, vector<DVD> dvd);
 void exibirKeywords(vector<CD> cd, vector<DVD> dvd);
+void menu();

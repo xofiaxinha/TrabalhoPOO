@@ -812,5 +812,16 @@ void exibirKeywords(vector<CD> cd, vector<DVD> dvd){
     }
 }
 void menu(){
+    cout << "----------------------------------------\n";
+    cout << "\t\t- Main.fm -\n";
+    cout << "----------------------------------------\n";
     
+    cout << "1. Adicionar Midia\n"
+        << "2. Remover Midia\n"
+        << "3. Mostrar Midia\n"
+        << "4. Mostrar Ordenado por Data\n"
+        << "5. Mostrar Faixas em Comum\n"
+        << "6. Mostrar por Genero\n"
+        << "7. Exibir Keywords disponíveis\n"
+        << "8. Sair\n";
 }
