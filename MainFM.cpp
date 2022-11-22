@@ -366,7 +366,6 @@ void cd::lista(vector<CD> cd){
     }
     cout << "----------------------------------------\n";
     verMais(cd);
-
 }
 vector<CD> cd::lerArq(){
     vector<CD> cd;
@@ -451,21 +450,30 @@ void cd::paraArq(vector<CD> cd){
     f.close();
 }
 void cd::mostrarOrdenadoData(vector<CD> v){
-  vector<CD> auxiliar = v;
-  if(!(v.size() >= 2)) return;
-  for(int i=0; i<auxiliar.size(); i++){
+    system("clear");
+    cout << "----------------------------------------\n";
+    cout << "\t- CDs por data (crescente) -\n";
+    cout << "----------------------------------------\n";
+    vector<CD> auxiliar = v;
+    int tam = auxiliar.size();
+    if((tam < 2)){
+        auxiliar[0].print();
+        return;
+    }
+    for(int i=0; i<tam; i++){
     int a = i;
-    for(int j = i+1; j<auxiliar.size(); j++){
-      if(auxiliar[j].getAno() < auxiliar[a].getAno()) a = j;
+    for(int j = i+1; j<tam; j++){
+        if(auxiliar[j].getAno() < auxiliar[a].getAno()) a = j;
     }
     CD obj = auxiliar[i];
     auxiliar[i] = auxiliar[a];
     auxiliar[a] = obj;
-  }
+    }
 
-  for(int i=0; i<auxiliar.size(); i++){
+    for(int i=0; i<auxiliar.size(); i++){
     auxiliar[i].print();
-  }
+    }
+    system("pause");
 } // ajeitar
 
 //funcoes de dvd
