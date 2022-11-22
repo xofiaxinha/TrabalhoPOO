@@ -38,11 +38,13 @@ void Midia::printFaixas(){
     for(int i = 0; i < nFaixas; i++){
         cout << '\t' << faixas[i] << endl;
     }
+    cout << '\n';
 }
 void Midia::printKeywords(){
     for(int i = 0; i < nKeyword; i++){
         cout << palavrasChave[i] << " ";
     }
+    cout << '\n';
 }
 void Midia::addFaixa(string faixa){
     faixas.push_back(faixa);
