@@ -3,12 +3,38 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+//#include <iterator>
 #include <stdexcept>
 #include "CD.h"
 #include "DVD.h"
 #include "func.h"
 using namespace std;
 
+//funções auxiliares que utilizam template
+template <typename T>
+void verMais(vector<T> m){
+    while(1){ //loop infinito que permite ver detalhes das midias
+        cout << "Digite o numero da midia para ver mais detalhes ou digite 0 para sair:\n";
+        int op;
+        cin >> op;
+        
+        if(op == 0 || op >= (int) m.size()) return;
+        
+        m[op-1].print();
+    }
+}
+template <typename T>
+void ordemAlfabetica(vector<T> *a){
+    for(typename vector<T>::iterator it = a->begin(); it != a->end(); it++){
+        for(typename vector<T>::iterator it2 = it + 1; it2 != a->end(); it2++){
+            if(it->getTitulo() > it2->getTitulo()){
+                T aux = *it;
+                *it = *it2;
+                *it2 = aux;
+            }
+        }
+    }
+} 
 //funcoes de cd
 void cd::add(vector<CD> *v){
   cin.ignore(); //limpa o buffer do cin
@@ -124,41 +150,81 @@ void cd::remove(vector<CD> *v){
     }cout << "CD nao encontrado.\n";
 } // ajeitar
 //funcoes auxiliares pra editar
-void editarArtista(Midia *cd){
+void editarArtista(Midia *m){
     cin.ignore();
     cout << "Digite o novo nome do artista:\n";
     string artista;
     getline(cin, artista);
-    cd->setArtista(artista);
+    m->setArtista(artista);
 }
-void editarTitulo(Midia *cd){
+void editarTitulo(Midia *m){
     cin.ignore();
-    cout << "Digite o novo titulo do CD:\n";
+    cout << "Digite o novo titulo:\n";
     string titulo;
     getline(cin, titulo);
-    cd->setTitulo(titulo);
+    m->setTitulo(titulo);
 }
 void editarFaixas(Midia *cd){
     cin.ignore();
-    cout << "Deseja adicionar as faixas?\nN para não. ";
+    cout << "Escolha uma opção:\n"
+        << "1. Reescrever as faixas\n"
+        << "2. Adicionar uma ou mais faixas\n"
+        << "3. Remover faixas\n"
+        << "X. Sair\n";
     char op;
     cin >> op;
     //se o usuario desejar adicionar as faixas, o programa entra no loop, e se não quiser pula a instrução
     vector<string> faixas;
-    if(op == 'n' || op == 'N'){
-        string p = "Não ha faixas cadastradas";
-        cout << p << '\n'; // mostra que não há faixas
-        faixas.push_back(p);}
-    cin.ignore(); // limpa o buffer
-    while(op != 'N' && op != 'n'){ // enquanto op não for não, insere faixa
-        cout << "Digite o nome da faixa:\n";
-        string faixa;
-        getline(cin, faixa);
-        faixas.push_back(faixa);
-        cout << "Deseja adicionar mais faixas?\nN para não. ";
-        cin >> op;
-        cin.ignore(); //limpa o buffer do cin
+    switch(op){
+        case '1':
+            while(op != 'N' && op != 'n'){ // enquanto op não for não, insere faixa
+                cout << "Digite o nome da faixa:\n";
+                string faixa;
+                getline(cin, faixa);
+                faixas.push_back(faixa);
+                cout << "Deseja adicionar mais faixas?\nN para não. ";
+                cin >> op;
+                cin.ignore(); //limpa o buffer do cin
+            }
+            break;
+        case '2':
+            if(cd->getFaixas().size() == 1){
+                if(cd->getFaixas()[0] == "Não há faixas disponiveis"){
+                    cd->getFaixas().pop_back();
+                }
+            }
+            while(op != 'N' && op != 'n'){ // enquanto op não for não, insere faixa
+                cout << "Digite o nome da faixa:\n";
+                string faixa;
+                getline(cin, faixa);
+                faixas.push_back(faixa);
+                cout << "Deseja adicionar mais faixas?\nN para não. ";
+                cin >> op;
+                cin.ignore(); //limpa o buffer do cin
+            }
+            break;
+        case '3':
+            if(cd->getFaixas().size() == 1){
+                if(cd->getFaixas()[0] == "Não há faixas disponiveis"){
+                    cout << "Não há faixas para serem removidas.\n";
+                }
+            }
+            else{
+                cout << "Digite o nome da faixa a ser removida:\n";
+                string faixa;
+                getline(cin, faixa);
+                for(vector<string>::iterator it = cd->getFaixas().begin(); it != cd->getFaixas().end(); it++){
+                    if(*it == faixa){
+                        cd->getFaixas().erase(it);
+                        break;
+                    }
+                }
+            }
+            break;
+        default:
+            break;
     }
+                // }
     cd->setFaixas(faixas);
 }
 void editarAno(Midia *cd){
@@ -280,8 +346,10 @@ void cd::lista(vector<CD> cd){
     cout << "Lista de CDs:\n";
     cout << "=======================================\n";
     for(int i = 0; i < cd.size(); i++){
-        cout << cd[i].getTitulo() << " por " << cd[i].getArtista() << '\n';
+        cout << i + 1 << ". " << cd[i].getTitulo() << " por " << cd[i].getArtista() << '\n';
     }
+    cout << "=======================================\n";
+
 }
 vector<CD> cd::lerArq(){
     vector<CD> cd;
@@ -491,8 +559,9 @@ void dvd::lista(vector<DVD> dvd){
     cout << "Lista de DVDs:\n";
     cout << "=======================================\n";
     for(int i = 0; i < dvd.size(); i++){
-        cout << dvd[i].getTitulo() << " por " << dvd[i].getArtista() << '\n';
+        cout << i + 1 << ". " << dvd[i].getTitulo() << " por " << dvd[i].getArtista() << '\n';
     }
+    verMais(dvd);
 }
 void editarFormatoAudio(DVD *dvd){
     cin.ignore();
@@ -742,25 +811,6 @@ void exibirKeywords(vector<CD> cd, vector<DVD> dvd){
         cout << palavrasChaveCD[i] << '\n';
     }
 }
-void ordemAlfabetica(vector<CD> *cd){
-    for(vector<CD>::iterator it = cd->begin(); it != cd->end(); it++){
-        for(vector<CD>::iterator it2 = it + 1; it2 != cd->end(); it2++){
-            if(it->getTitulo() > it2->getTitulo()){
-                CD aux = *it;
-                *it = *it2;
-                *it2 = aux;
-            }
-        }
-    }
+void menu(){
+    
 }
-void ordemAlfabetica(vector<DVD> *dvd){
-    for(vector<DVD>::iterator it = dvd->begin(); it != dvd->end(); it++){
-        for(vector<DVD>::iterator it2 = it + 1; it2 != dvd->end(); it2++){
-            if(it->getTitulo() > it2->getTitulo()){
-                DVD aux = *it;
-                *it = *it2;
-                *it2 = aux;
-            }
-        }
-    }
-}   
