@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "midia.h"
+#include "Midia.h"
 using namespace std;
 
 class DVD: public Midia{

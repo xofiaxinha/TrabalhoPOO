@@ -1,4 +1,4 @@
-#include "midia.h"
+#include "Midia.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -54,9 +54,11 @@ void Midia::addKeyword(string keyword){
 }
 void Midia::setFaixas(vector<string> faixas){
     this->faixas = faixas;
+    this->nFaixas = faixas.size();
 }
 void Midia::setPalavrasChave(vector<string> palavrasChave){
     this->palavrasChave = palavrasChave;
+    this->nKeyword = palavrasChave.size();
 }
 vector<string> Midia::getFaixas(){
   return faixas;

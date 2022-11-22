@@ -12,6 +12,7 @@ void editar(vector<CD> *cd);
 vector<CD> lerArq();
 void paraArq(vector<CD> cd);
 void mostrarOrdenadoData(vector<CD> v);
+CD buscar(vector<CD> v, string nome, bool *key);
 }
 namespace dvd{
 void add(vector<DVD> *v);
@@ -21,6 +22,7 @@ void editar(vector<DVD> *dvd);
 vector<DVD> lerArq();
 void paraArq(vector<DVD> dvd);
 void mostrarOrdenadoData(vector<DVD> v);
+DVD buscar(vector<DVD> v, string nome, bool *key);
 }
 void mostrarOrdenadoData(vector<CD> v, vector<DVD> d);
 void mostrarFaixasEmComum(CD cd, DVD dvd);

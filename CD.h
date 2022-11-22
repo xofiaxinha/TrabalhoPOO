@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "midia.h"
+#include "Midia.h"
 using namespace std;
 
 class CD: public Midia{

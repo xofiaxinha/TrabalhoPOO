@@ -1,6 +1,6 @@
-OBJS	= ajeitanoFunsao.o func.o DVD.o CD.o midia.o
-SOURCE	= ajeitanoFunsao.cpp func.cpp DVD.cpp CD.cpp midia.cpp
-HEADER	= func.h DVD.h CD.h midia.h
+OBJS	= main.o MainFM.o DVD.o CD.o Midia.o
+SOURCE	= main.cpp MainFM.cpp DVD.cpp CD.cpp Midia.cpp
+HEADER	= MainFM.h DVD.h CD.h Midia.h
 OUT	= main.exe
 CC	 = g++
 FLAGS	 = -g -c -Wall
@@ -8,12 +8,10 @@ LFLAGS	 =
 
 all: $(OBJS)
 	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
-
-ajeitanoFunsao.o: ajeitanoFunsao.cpp
-	$(CC) $(FLAGS) ajeitanoFunsao.cpp 
-
-func.o: func.cpp
-	$(CC) $(FLAGS) func.cpp 
+main.o: main.cpp
+	$(CC) $(FLAGS) main.cpp
+MainFM.o: MainFM.cpp
+	$(CC) $(FLAGS) MainFM.cpp 
 
 DVD.o: DVD.cpp
 	$(CC) $(FLAGS) DVD.cpp 
@@ -21,8 +19,8 @@ DVD.o: DVD.cpp
 CD.o: CD.cpp
 	$(CC) $(FLAGS) CD.cpp 
 
-midia.o: midia.cpp
-	$(CC) $(FLAGS) midia.cpp 
+Midia.o: Midia.cpp
+	$(CC) $(FLAGS) Midia.cpp 
 
 
 clean:
