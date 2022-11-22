@@ -36,11 +36,127 @@ void ordemAlfabetica(vector<T> *a){
     }
 } 
 
+//funcoes auxiliares pra editar
+void editarArtista(Midia *m){
+    cin.ignore();
+    cout << "Digite o novo nome do artista:\n";
+    string artista;
+    getline(cin, artista);
+    m->setArtista(artista);
+}
+void editarTitulo(Midia *m){
+    cin.ignore();
+    cout << "Digite o novo titulo:\n";
+    string titulo;
+    getline(cin, titulo);
+    m->setTitulo(titulo);
+}
+void editarFaixas(Midia *m){
+    cin.ignore();
+    cout << "Escolha uma opção:\n"
+        << "1. Reescrever as faixas\n"
+        << "2. Adicionar uma ou mais faixas\n"
+        << "3. Remover faixas\n"
+        << "X. Sair\n";
+    char op;
+    cin >> op;
+    //se o usuario desejar adicionar as faixas, o programa entra no loop, e se não quiser pula a instrução
+    vector<string> faixas;
+    switch(op){
+        case '1':
+            while(op != 'N' && op != 'n'){ // enquanto op não for não, insere faixa
+                cout << "Digite o nome da faixa:\n";
+                string faixa;
+                getline(cin, faixa);
+                faixas.push_back(faixa);
+                cout << "Deseja adicionar mais faixas?\nN para não. ";
+                cin >> op;
+                cin.ignore(); //limpa o buffer do cin
+            }
+            break;
+        case '2':
+            if(m->getFaixas().size() == 1){
+                if(m->getFaixas()[0] == "Não há faixas disponiveis"){
+                    m->getFaixas().pop_back();
+                }
+            }
+            while(op != 'N' && op != 'n'){ // enquanto op não for não, insere faixa
+                cout << "Digite o nome da faixa:\n";
+                string faixa;
+                getline(cin, faixa);
+                faixas.push_back(faixa);
+                cout << "Deseja adicionar mais faixas?\nN para não. ";
+                cin >> op;
+                cin.ignore(); //limpa o buffer do cin
+            }
+            break;
+        case '3':
+            if(m->getFaixas().size() == 1){
+                if(m->getFaixas()[0] == "Não há faixas disponiveis"){
+                    cout << "Não há faixas para serem removidas.\n";
+                }
+            }
+            else{
+                cout << "Digite o nome da faixa a ser removida:\n";
+                string faixa;
+                getline(cin, faixa);
+                for(vector<string>::iterator it = m->getFaixas().begin(); it != m->getFaixas().end(); it++){
+                    if(*it == faixa){
+                        m->getFaixas().erase(it);
+                        break;
+                    }
+                }
+            }
+            break;
+        default:
+            break;
+    }
+                // }
+    m->setFaixas(faixas);
+}
+void editarAno(Midia *m){
+    cin.ignore();
+    cout << "Digite o novo ano de lançamento:\n";
+    int ano;
+    cin >> ano;
+    m->setAno(ano);
+}
+void editarGenero(Midia *m){
+    cin.ignore();
+    cout << "Digite o novo genero:\n";
+    string genero;
+    cin >> genero;
+    m->setGenero(genero);
+}
+void editarPalavrasChave(Midia *m){
+    cin.ignore();
+    cout << "Deseja adicionar palavras-chave?\nN para não. ";
+    char op;
+    cin >> op;
+    //se o usuario desejar adicionar as palavras-chave, o programa entra no loop, e se não quiser pula a instrução
+    vector<string> palavrasChave;
+    if(op == 'n' || op == 'N'){
+        string k = "Não ha palavras-chave disponiveis";
+        cout << k << '\n';
+        palavrasChave.push_back(k);
+    }
+    cin.ignore();
+    while(op != 'N' && op != 'n'){
+        cout << "Digite a palavra-chave:\n";
+        string palavraChave;
+        cin >> palavraChave;
+        palavrasChave.push_back(palavraChave);
+        cout << "Deseja adicionar mais palavras-chave?\nN para não. ";
+        cin >> op;
+    }
+    m->setPalavrasChave(palavrasChave);
+}
+
 //funcoes de cd
 void cd::add(vector<CD> *v){
     system("clear");
     cout << "----------------------------------------\n";
-    cout << "\t- Adicionando CD.fm -\n";
+    cout << "\t\t- Adicionando CD -\n";
     cout << "----------------------------------------\n";
     cin.ignore(); //limpa o buffer do cin
     
@@ -125,7 +241,7 @@ void cd::add(vector<CD> *v){
 void cd::remove(vector<CD> *v){
     system("clear");
     cout << "----------------------------------------\n";
-    cout << "\t- Removendo CD-\n";
+    cout << "\t\t- Removendo CD-\n";
     cout << "----------------------------------------\n";
     cin.ignore();
     int tam = v->size(); //pega o tamanho do vetor
@@ -145,7 +261,7 @@ void cd::remove(vector<CD> *v){
             cout << "\tCD a ser removido:\n"
                 << "----------------------------------------\n";
             auxiliar.print();
-            for(int j = i; j < v->size(); j++){
+            for(int j = i; j < tam; j++){
                 v[j] = v[j+1];
             }
             v->pop_back();
@@ -155,122 +271,8 @@ void cd::remove(vector<CD> *v){
         }
     }cout << "CD nao encontrado.\n";
     system("pause");
-} // ajeitar
-//funcoes auxiliares pra editar
-void editarArtista(Midia *m){
-    cin.ignore();
-    cout << "Digite o novo nome do artista:\n";
-    string artista;
-    getline(cin, artista);
-    m->setArtista(artista);
 }
-void editarTitulo(Midia *m){
-    cin.ignore();
-    cout << "Digite o novo titulo:\n";
-    string titulo;
-    getline(cin, titulo);
-    m->setTitulo(titulo);
-}
-void editarFaixas(Midia *cd){
-    cin.ignore();
-    cout << "Escolha uma opção:\n"
-        << "1. Reescrever as faixas\n"
-        << "2. Adicionar uma ou mais faixas\n"
-        << "3. Remover faixas\n"
-        << "X. Sair\n";
-    char op;
-    cin >> op;
-    //se o usuario desejar adicionar as faixas, o programa entra no loop, e se não quiser pula a instrução
-    vector<string> faixas;
-    switch(op){
-        case '1':
-            while(op != 'N' && op != 'n'){ // enquanto op não for não, insere faixa
-                cout << "Digite o nome da faixa:\n";
-                string faixa;
-                getline(cin, faixa);
-                faixas.push_back(faixa);
-                cout << "Deseja adicionar mais faixas?\nN para não. ";
-                cin >> op;
-                cin.ignore(); //limpa o buffer do cin
-            }
-            break;
-        case '2':
-            if(cd->getFaixas().size() == 1){
-                if(cd->getFaixas()[0] == "Não há faixas disponiveis"){
-                    cd->getFaixas().pop_back();
-                }
-            }
-            while(op != 'N' && op != 'n'){ // enquanto op não for não, insere faixa
-                cout << "Digite o nome da faixa:\n";
-                string faixa;
-                getline(cin, faixa);
-                faixas.push_back(faixa);
-                cout << "Deseja adicionar mais faixas?\nN para não. ";
-                cin >> op;
-                cin.ignore(); //limpa o buffer do cin
-            }
-            break;
-        case '3':
-            if(cd->getFaixas().size() == 1){
-                if(cd->getFaixas()[0] == "Não há faixas disponiveis"){
-                    cout << "Não há faixas para serem removidas.\n";
-                }
-            }
-            else{
-                cout << "Digite o nome da faixa a ser removida:\n";
-                string faixa;
-                getline(cin, faixa);
-                for(vector<string>::iterator it = cd->getFaixas().begin(); it != cd->getFaixas().end(); it++){
-                    if(*it == faixa){
-                        cd->getFaixas().erase(it);
-                        break;
-                    }
-                }
-            }
-            break;
-        default:
-            break;
-    }
-                // }
-    cd->setFaixas(faixas);
-}
-void editarAno(Midia *cd){
-    cin.ignore();
-    cout << "Digite o novo ano de lançamento:\n";
-    int ano;
-    cin >> ano;
-    cd->setAno(ano);
-}
-void editarGenero(Midia *cd){
-    cin.ignore();
-    cout << "Digite o novo genero:\n";
-    string genero;
-    cin >> genero;
-    cd->setGenero(genero);
-}
-void editarPalavrasChave(Midia *cd){
-    cin.ignore();
-    cout << "Deseja adicionar palavras-chave?\nN para não. ";
-    char op;
-    cin >> op;
-    //se o usuario desejar adicionar as palavras-chave, o programa entra no loop, e se não quiser pula a instrução
-    vector<string> palavrasChave;
-    if(op == 'n' || op == 'N'){
-        string k = "Não ha palavras-chave disponiveis";
-        cout << k << '\n';
-        palavrasChave.push_back(k);
-    }
-    cin.ignore();
-    while(op != 'N' && op != 'n'){
-        cout << "Digite a palavra-chave:\n";
-        string palavraChave;
-        cin >> palavraChave;
-        palavrasChave.push_back(palavraChave);
-        cout << "Deseja adicionar mais palavras-chave?\nN para não. ";
-        cin >> op;
-    }
-    cd->setPalavrasChave(palavrasChave);
-}
+//funções auxiliares de editar especificamente de cd
 void editarDuracao(CD *cd){
     cin.ignore();
     cout << "Digite a nova duração do CD:\n";
@@ -293,6 +295,10 @@ void editarColetanea(CD *cd){
     cd->setColetanea(coletanea);
 }
 void cd::editar(vector<CD> *cd){
+    system("clear");
+    cout << "----------------------------------------\n";
+    cout << "\t\t- Editando CD-\n";
+    cout << "----------------------------------------\n";
     cin.ignore();
     cout << "Digite o nome do CD que deseja editar:\n";
     string titulo;
@@ -348,14 +354,17 @@ void cd::editar(vector<CD> *cd){
             *it = auxiliar;
         }
     }
+    system("pause");
 } // ajeitar
 void cd::lista(vector<CD> cd){
+    system("clear");
     cout << "Lista de CDs:\n";
-    cout << "=======================================\n";
-    for(int i = 0; i < cd.size(); i++){
+    cout << "----------------------------------------\n";
+    int tam = cd.size();
+    for(int i = 0; i < tam; i++){
         cout << i + 1 << ". " << cd[i].getTitulo() << " por " << cd[i].getArtista() << '\n';
     }
-    cout << "=======================================\n";
+    cout << "----------------------------------------\n";
     verMais(cd);
 
 }
