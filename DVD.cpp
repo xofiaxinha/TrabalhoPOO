@@ -24,8 +24,12 @@ string DVD::getFormatoTela(){
 void DVD::print(){
     cout << "Artista: " << getArtista() << endl;
     cout << "Titulo: " << getTitulo() << endl;
+    cout << "Faixas: \n";
+    this->printFaixas();
     cout << "Ano: " << getAno() << endl;
     cout << "Genero: " << getGenero() << endl;
     cout << "Formato de Audio: " << getFormatoAudio() << endl;
     cout << "Formato de Tela: " << getFormatoTela() << endl;
+    cout << "Palavras-chave: \n";
+    this->printKeywords();
 }

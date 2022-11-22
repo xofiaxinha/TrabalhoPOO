@@ -30,6 +30,8 @@ bool CD::getColetanea(){
 void CD::print(){
     cout << "Artista: " << getArtista() << endl;
     cout << "Titulo: " << getTitulo() << endl;
+    cout << "Faixas: \n";
+    this->printFaixas();
     cout << "Ano: " << getAno() << endl;
     cout << "Genero: " << getGenero() << endl;
     cout << "Duracao: " << getDuracao() << endl;
@@ -39,4 +41,6 @@ void CD::print(){
     else{
         cout << "Coletanea: Nao" << endl;
     }
+    cout << "Palavras-chave: \n";
+    this->printKeywords();
 }

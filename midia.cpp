@@ -36,12 +36,12 @@ string Midia::getGenero(){
 }
 void Midia::printFaixas(){
     for(int i = 0; i < nFaixas; i++){
-        cout << faixas[i] << endl;
+        cout << '\t' << faixas[i] << endl;
     }
 }
 void Midia::printKeywords(){
     for(int i = 0; i < nKeyword; i++){
-        cout << palavrasChave[i] << endl;
+        cout << palavrasChave[i] << " ";
     }
 }
 void Midia::addFaixa(string faixa){
