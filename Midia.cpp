@@ -36,7 +36,7 @@ string Midia::getGenero(){
 }
 void Midia::printFaixas(){
     for(int i = 0; i < nFaixas; i++){
-        cout << '\t' << faixas[i] << endl;
+        cout << faixas[i] << endl;
     }
     cout << '\n';
 }
@@ -54,9 +54,9 @@ void Midia::addKeyword(string keyword){
     palavrasChave.push_back(keyword);
     nKeyword++;
 }
-void Midia::setFaixas(vector<string> faixas){
-    this->faixas = faixas;
-    this->nFaixas = faixas.size();
+void Midia::setFaixas(vector<string> f){
+    faixas = f;
+    nFaixas = f.size();
 }
 void Midia::setPalavrasChave(vector<string> palavrasChave){
     this->palavrasChave = palavrasChave;

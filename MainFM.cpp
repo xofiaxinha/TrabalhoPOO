@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdlib>
+#include <cstdio>
 #include <string>
 #include <vector>
 #include <fstream>
@@ -36,6 +38,14 @@ void ordemAlfabetica(vector<T> *a){
     }
 } 
 
+void pause(){
+    cin.ignore();
+    cout << "Digite qualquer tecla para continuar" << '\n';
+    getchar();
+    cout << "----------------------------------------\n";
+    system("clear");
+}
+
 //funcoes auxiliares pra editar
 void editarArtista(Midia *m){
     cin.ignore();
@@ -65,13 +75,14 @@ void editarFaixas(Midia *m){
     switch(op){
         case '1':
             while(op != 'N' && op != 'n'){ // enquanto op não for não, insere faixa
+                cin.ignore();
                 cout << "Digite o nome da faixa:\n";
                 string faixa;
                 getline(cin, faixa);
                 faixas.push_back(faixa);
                 cout << "Deseja adicionar mais faixas?\nN para não. ";
                 cin >> op;
-                cin.ignore(); //limpa o buffer do cin
+                //cin.ignore(); //limpa o buffer do cin
             }
             break;
         case '2':
@@ -236,7 +247,7 @@ void cd::add(vector<CD> *v){
     //mensagem de confirmação
     cout << "- CD adicionado com sucesso!\n";
     ordemAlfabetica(v);
-    system("pause");
+    pause();
 }
 void cd::remove(vector<CD> *v){
     system("clear");
@@ -270,7 +281,7 @@ void cd::remove(vector<CD> *v){
             return;
         }
     }cout << "CD nao encontrado.\n";
-    system("pause");
+    pause();
 }
 //funções auxiliares de editar especificamente de cd
 void editarDuracao(CD *cd){
@@ -356,8 +367,8 @@ void cd::editar(vector<CD> *cd){
             auxiliar.print();
         }
     }
-    system("pause");
-} // ajeitar
+    pause();
+}
 void cd::lista(vector<CD> cd){
     system("clear");
     cout << "Lista de CDs:\n";
@@ -373,18 +384,15 @@ vector<CD> cd::lerArq(){
     vector<CD> cd;
     ifstream arq;
     arq.open("CD.txt", ios::in);
+    string artista, titulo, genero;
+    int ano, duracao, volume;
+    bool coletanea;
+    string linha;
     if(!arq.is_open()) throw runtime_error("Erro ao abrir o arquivo\n");
-        while(!arq.eof()){
-            string artista, titulo, genero;
-            int ano, duracao, volume;
-            bool coletanea;
-            string linha;
-            getline(arq, artista); // pega o artista
-            if(artista == "") break; // se o artista for vazio, significa que o arquivo acabou
-            getline(arq, titulo); // pega o titulo
-            getline(arq, linha); // pega o ano
+        while(getline(arq, artista) && getline(arq, titulo) && getline(arq, linha)){ //condição que pega o artista, titulo e ano, e, se chegar no fim do arquivo, ao menos um desses vai dar erro
             stringstream ss(linha);
             ss >> ano;
+            //arq.ignore(7);
             getline(arq, genero); // pega o genero
             getline(arq, linha); // pega a duração
             stringstream ss1(linha);
@@ -401,10 +409,10 @@ vector<CD> cd::lerArq(){
             ss4 >> nFaixas;
             CD aux(artista, titulo, ano, genero, duracao, volume, coletanea);
             vector<string> faixas;
-            arq >> nFaixas;
+            //arq >> nFaixas;
             for(int i = 0; i < nFaixas; i++){
                 string faixa;
-                arq >> faixa;
+                getline(arq, faixa);
                 faixas.push_back(faixa);
             }
             aux.setFaixas(faixas);
@@ -415,9 +423,10 @@ vector<CD> cd::lerArq(){
             vector<string> palavrasChave;
             for(int i = 0; i < nKeyword; i++){
                 string palavraChave;
-                arq >> palavraChave;
+                getline(arq, palavraChave);
                 palavrasChave.push_back(palavraChave);
             }
+            //getline(arq, linha); // ler a quebra de linha
             aux.setPalavrasChave(palavrasChave);
             cd.push_back(aux);
         }
@@ -429,8 +438,9 @@ void cd::paraArq(vector<CD> cd){
     f.open("CD.txt", ios::out);
     if(!f.is_open()) {throw runtime_error("ERRO\n");}
 
+    int tamanho = cd.size();
     if(cd.size() == 0) return;
-    for(int i = 0; i<cd.size(); i++){
+    for(int i = 0; i<tamanho; i++){
         f << cd[i].getArtista() << '\n';
         f << cd[i].getTitulo() << '\n';
         f << cd[i].getAno() << '\n';
@@ -449,6 +459,7 @@ void cd::paraArq(vector<CD> cd){
             f << palavrasChave[j] << '\n';
         }
     }
+    //f << '-' << '\n';
     f.close();
 }
 void cd::mostrarOrdenadoData(vector<CD> v){
@@ -475,8 +486,8 @@ void cd::mostrarOrdenadoData(vector<CD> v){
     for(int i=0; i<auxiliar.size(); i++){
     auxiliar[i].print();
     }
-    system("pause");
-} // ajeitar
+    pause();
+}
 
 //funcoes de dvd
 void dvd::add(vector<DVD> *v){
@@ -556,7 +567,7 @@ void dvd::add(vector<DVD> *v){
     v->push_back(aux);
     cout << "DVD adicionado com sucesso!\n";
     ordemAlfabetica(v);
-    system("pause");
+    pause();
 }
 void dvd::remove(vector<DVD> *v){
     system("clear");
@@ -591,7 +602,7 @@ void dvd::remove(vector<DVD> *v){
             return;
         }
     }cout << "DVD nao encontrado.\n";
-    system("pause");
+    pause();
 }
 void dvd::lista(vector<DVD> dvd){
     cout << "\tLista de DVDs:\n";
@@ -680,36 +691,31 @@ void dvd::editar(vector<DVD> *dvd){
     }
 
     cout << "DVD não encontrado.\n";
-    system("pause");
+    pause();
 }
 vector<DVD> dvd::lerArq(){
     vector<DVD> dvd;
     ifstream arq;
     arq.open("DVD.txt", ios::in);
     if(!arq.is_open()) throw runtime_error("Erro ao abrir o arquivo\n");
-        while(!arq.eof()){
-            string artista, titulo, genero, audio, video;
-            int ano;
-            string linha;
-            getline(arq, artista); // pega o artista
-            if(artista == "") break; // se o artista for vazio, significa que o arquivo acabou
-            getline(arq, titulo); // pega o titulo
-            getline(arq, linha); // pega o ano
+    string artista, titulo, genero, audio, video;
+    int ano;
+    string linha;
+        while(getline(arq, artista) && getline(arq, titulo) && getline(arq, linha)){
             stringstream ss(linha);
             ss >> ano;
             getline(arq, genero); // pega o genero
-            getline(arq, audio); // pega a duração
-            getline(arq, video); // pega o valor da coletanea
+            getline(arq, audio); // pega o formato de audio
+            getline(arq, video); // pega o formato de video
             getline(arq, linha); // pega o numero de faixas
             int nFaixas;
             stringstream ss2(linha);
             ss2 >> nFaixas;
             DVD aux(artista, titulo, ano, genero, audio, video);
             vector<string> faixas;
-            arq >> nFaixas;
             for(int i = 0; i < nFaixas; i++){
                 string faixa;
-                arq >> faixa;
+                getline(arq, faixa);
                 faixas.push_back(faixa);
             }
             aux.setFaixas(faixas);
@@ -720,7 +726,7 @@ vector<DVD> dvd::lerArq(){
             vector<string> palavrasChave;
             for(int i = 0; i < nKeyword; i++){
                 string palavraChave;
-                arq >> palavraChave;
+                getline(arq, palavraChave);
                 palavrasChave.push_back(palavraChave);
             }
             aux.setPalavrasChave(palavrasChave);
@@ -779,7 +785,7 @@ void dvd::mostrarOrdenadoData(vector<DVD> v){
     for(int i = 0; i < aux.size(); i++){
         aux[i].print();
     }
-    system("pause");
+    pause();
 }
 
 //funcoes gerais
@@ -824,7 +830,7 @@ void mostrarOrdenadoData(vector<CD> v, vector<DVD> d){
         }
     }
 
-    system("pause");
+    pause();
 }
 void mostrarFaixasEmComum(CD cd, DVD dvd){
     system("clear");
@@ -840,7 +846,8 @@ void mostrarFaixasEmComum(CD cd, DVD dvd){
             }
         }
     }
-    system("pause");
+    pause();
+    //system("pause");
 }
 void mostrarPorGenero(vector<CD> cd, vector<DVD> dvd){
     system("clear");
@@ -849,21 +856,35 @@ void mostrarPorGenero(vector<CD> cd, vector<DVD> dvd){
     cout << "----------------------------------------\n";
     vector<string> generosCD;
     generosCD.push_back(cd[0].getGenero());
-    for(int i = 0; i < cd.size(); i++){
-        for(int j = 0; j < generosCD.size(); j++){
+    int tamCD = cd.size();
+    int tamGen = generosCD.size();
+    for(int i = 0; i < tamCD; i++){
+        for(int j = i + 1; j < tamGen; j++){
             if(cd[i].getGenero() == generosCD[j]) break;
-            if(j == generosCD.size() - 1) generosCD.push_back(cd[i].getGenero());
+            if(j == tamGen - 1) generosCD.push_back(cd[i].getGenero());
         }
     }
+
+    cout << "CDs:\n";
+    for(int i = 0; i < generosCD.size(); i++){
+        cout << generosCD[i] << ":\n";
+        for(int j = 0; j < tamCD; j++){
+            if(cd[j].getGenero() == generosCD[i]) {cd[j].print();
+            cout << "----------------------------------------\n";}
+        }
+    }
+
     vector<string> generosDVD;
     generosDVD.push_back(dvd[0].getGenero());
-    for(int i = 0; i < dvd.size(); i++){
-        for(int j = 0; j < generosDVD.size(); j++){
+    int tamDVD = dvd.size();
+    int tamGenDVD = generosDVD.size();
+    for(int i = 0; i < tamDVD; i++){
+        for(int j = 0; j < tamGenDVD; j++){
             if(dvd[i].getGenero() == generosDVD[j]) break;
-            if(j == generosDVD.size() - 1) generosDVD.push_back(dvd[i].getGenero());
+            if(j == tamGenDVD - 1) generosDVD.push_back(dvd[i].getGenero());
         }
     }
-    system("pause");
+    pause();
 }
 void exibirKeywords(vector<CD> cd, vector<DVD> dvd){
     system("clear");
@@ -871,7 +892,8 @@ void exibirKeywords(vector<CD> cd, vector<DVD> dvd){
     cout << "\t- Keywords -\n";
     cout << "----------------------------------------\n";
     vector<string> palavrasChaveCD = cd[0].getPalavrasChave();
-    for(int i = 1; i<cd.size(); i++){
+    int tamCD = cd.size();
+    for(int i = 1; i<tamCD; i++){
         vector<string> aux = cd[i].getPalavrasChave();
         for(int j = 0; j < aux.size(); j++){
             for(int k = 0; k<palavrasChaveCD.size(); k++){
@@ -879,20 +901,19 @@ void exibirKeywords(vector<CD> cd, vector<DVD> dvd){
             palavrasChaveCD.push_back(aux[j]);}
         }
     }
-
-    vector<string> palavrasChaveDVD = dvd[0].getPalavrasChave();
-    for(int i = 1; i<dvd.size(); i++){
+    tamCD = palavrasChaveCD.size();
+    for(int i = 0; i<dvd.size(); i++){
         vector<string> aux = dvd[i].getPalavrasChave();
         for(int j = 0; j < aux.size(); j++){
-            for(int k = 0; k<palavrasChaveDVD.size(); k++){
-            if(aux[j] == palavrasChaveDVD[k]) break;
-            palavrasChaveDVD.push_back(aux[j]);}
+            for(int k = 0; k<tamCD; k++){
+            if(aux[j] == palavrasChaveCD[k]) break;
+            palavrasChaveCD.push_back(aux[j]);}
         }
     }
     for(int i = 0; i < palavrasChaveCD.size(); i++){
         cout << palavrasChaveCD[i] << '\n';
     }
-    system("pause");
+    pause();
 }
 void menu(){
     cout << "----------------------------------------\n";
@@ -902,10 +923,11 @@ void menu(){
     cout << "1. Adicionar Midia\n"
         << "2. Remover Midia\n"
         << "3. Mostrar Midia\n"
-        << "4. Mostrar Ordenado por Data\n"
-        << "5. Mostrar Faixas em Comum\n"
-        << "6. Mostrar por Genero\n"
-        << "7. Exibir Keywords disponíveis\n"
+        << "4. Editar Midia\n"
+        << "5. Mostrar Ordenado por Data\n"
+        << "7. Mostrar Faixas em Comum\n"
+        << "8. Mostrar por Genero\n"
+        << "9. Exibir Keywords disponíveis\n"
         << "0. Sair\n";
 }
 CD cd::buscar(vector<CD> v, string nome, bool *key){
@@ -917,6 +939,7 @@ CD cd::buscar(vector<CD> v, string nome, bool *key){
         }
     }
     cout << "Midia nao encontrada\n";
+    pause();
     return v[0];
 }
 DVD dvd::buscar(vector<DVD> v, string nome, bool *key){
@@ -928,5 +951,6 @@ DVD dvd::buscar(vector<DVD> v, string nome, bool *key){
         }
     }
     cout << "Midia nao encontrada\n";
+    pause();
     return v[0];
 }

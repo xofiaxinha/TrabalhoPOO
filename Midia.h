@@ -20,7 +20,7 @@ class Midia{
         void setTitulo(string titulo);
         void setAno(int ano);
         void setGenero(string genero);
-        void setFaixas(vector<string> faixas);
+        void setFaixas(vector<string> f);
         void setPalavrasChave(vector<string> palavrasChave);
         string getArtista();
         string getTitulo();

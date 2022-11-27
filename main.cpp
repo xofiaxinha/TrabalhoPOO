@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+#include <cstdio>
 #include "MainFM.h"
 using namespace std;
+void pause();
 int main(){
     vector<CD> cd = cd::lerArq();
     vector<DVD> dvd = dvd::lerArq();
@@ -53,11 +55,44 @@ int main(){
 
             }
                 break;
-
             case 4:
-                mostrarOrdenadoData(cd, dvd);
+                {cout << "----------------------------------------\n";
+                cout << "Deseja ver as midias?";
+                cout << "1 - Sim" << '\n';
+                cout << "2 - Nao" << '\n';
+                int op;
+                cin >> op;
+                if(op == 1) {
+                    cout << "----------------------------------------\n";
+                    cout << "CDs disponíveis:" << '\n';
+                    cd::lista(cd);
+                    cout << "----------------------------------------\n";
+                    cout << "DVDs disponíveis:" << '\n';
+                    dvd::lista(dvd);
+                    cout << "----------------------------------------\n";
+                    op = 2;}
+                if(op == 2){
+                    cout << "----------------------------------------\n";
+                    cout << "Escolha uma opção:" << '\n';
+                    cout << "1 - CD" << '\n';
+                    cout << "2 - DVD" << '\n';
+                    cin >> op;
+                    if(op == 1)
+                        cd::editar(&cd);
+                    else if(op == 2)
+                        dvd::editar(&dvd);
+                    else
+                        cout << "Opcao invalida" << '\n';
+                }
+                else
+                    cout << "Opcao invalida" << '\n';
+                }
                 break;
-            case 5:{
+            case 5:
+                cd::mostrarOrdenadoData(cd);
+                dvd::mostrarOrdenadoData(dvd);
+                break;
+            case 6:{
                 string nome;
                 bool key = false;
                 cout << "Digite o titulo da midia: ";
@@ -68,16 +103,19 @@ int main(){
                 else cout << "Midia nao encontrada" << '\n';
             }
                 break;
-            // case 6:
-            //     break;
-            // case 7:
-            //     break;
+            case 7:
+                mostrarPorGenero(cd, dvd);
+                break;
             case 8:
+                exibirKeywords(cd, dvd);
+                break;
+            case 9:
                 break;
             default:
                 cout << "Opcao invalida" << '\n';
                 break;
         }
-        system("clear");
     }
+    cd::paraArq(cd);
+    dvd::paraArq(dvd);
 }
