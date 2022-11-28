@@ -38,7 +38,7 @@ void Midia::printFaixas(){
     for(int i = 0; i < nFaixas; i++){
         cout << faixas[i] << endl;
     }
-    cout << '\n';
+    // cout << '\n';
 }
 void Midia::printKeywords(){
     for(int i = 0; i < nKeyword; i++){

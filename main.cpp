@@ -88,9 +88,20 @@ int main(){
                     cout << "Opcao invalida" << '\n';
                 }
                 break;
-            case 5:
-                cd::mostrarOrdenadoData(cd);
-                dvd::mostrarOrdenadoData(dvd);
+            case 5:{
+                int op;
+                cout << "----------------------------------------\n";
+                    cout << "Escolha uma opção:" << '\n';
+                    cout << "1 - CD" << '\n';
+                    cout << "2 - DVD" << '\n';
+                    cout << "3 - Todos" << '\n';
+                    cin >> op;
+                if(op == 1) cd::mostrarOrdenadoData(cd);
+                else if(op == 2) dvd::mostrarOrdenadoData(dvd);
+                else if(op == 3)mostrarOrdenadoData(cd, dvd);
+                else
+                    cout << "Opcao invalida" << '\n';
+                cout << "----------------------------------------\n";}
                 break;
             case 6:{
                 string nome;
@@ -107,9 +118,9 @@ int main(){
                 mostrarPorGenero(cd, dvd);
                 break;
             case 8:
-                exibirKeywords(cd, dvd);
                 break;
             case 9:
+                exibirKeywords(cd, dvd);
                 break;
             default:
                 cout << "Opcao invalida" << '\n';

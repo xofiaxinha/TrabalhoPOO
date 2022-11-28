@@ -42,7 +42,7 @@ void pause(){
     cin.ignore();
     cout << "Digite qualquer tecla para continuar" << '\n';
     getchar();
-    cout << "----------------------------------------\n";
+    //cout << "----------------------------------------\n";
     system("clear");
 }
 
@@ -370,7 +370,6 @@ void cd::editar(vector<CD> *cd){
     pause();
 }
 void cd::lista(vector<CD> cd){
-    system("clear");
     cout << "Lista de CDs:\n";
     cout << "----------------------------------------\n";
     int tam = cd.size();
@@ -379,6 +378,7 @@ void cd::lista(vector<CD> cd){
     }
     cout << "----------------------------------------\n";
     verMais(cd);
+    pause();
 }
 vector<CD> cd::lerArq(){
     vector<CD> cd;
@@ -471,20 +471,24 @@ void cd::mostrarOrdenadoData(vector<CD> v){
     int tam = auxiliar.size();
     if((tam < 2)){
         auxiliar[0].print();
+        cout << "----------------------------------------\n";
+        pause();
         return;
     }
     for(int i=0; i<tam; i++){
-    int a = i;
-    for(int j = i+1; j<tam; j++){
-        if(auxiliar[j].getAno() < auxiliar[a].getAno()) a = j;
-    }
-    CD obj = auxiliar[i];
-    auxiliar[i] = auxiliar[a];
-    auxiliar[a] = obj;
+        int a = i;
+        for(int j = i+1; j<tam; j++){
+            if(auxiliar[j].getAno() < auxiliar[a].getAno()) a = j;
+        }
+        
+        CD obj = auxiliar[i];
+        auxiliar[i] = auxiliar[a];
+        auxiliar[a] = obj;
     }
 
-    for(int i=0; i<auxiliar.size(); i++){
-    auxiliar[i].print();
+    for(int i=0; i<tam; i++){
+        auxiliar[i].print();
+        cout << "----------------------------------------\n";
     }
     pause();
 }
@@ -605,12 +609,14 @@ void dvd::remove(vector<DVD> *v){
     pause();
 }
 void dvd::lista(vector<DVD> dvd){
-    cout << "\tLista de DVDs:\n";
+    int tam = dvd.size();
+    cout << "Lista de DVDs:\n";
     cout << "----------------------------------------\n";
-    for(int i = 0; i < dvd.size(); i++){
+    for(int i = 0; i < tam; i++){
         cout << i + 1 << ". " << dvd[i].getTitulo() << " por " << dvd[i].getArtista() << '\n';
     }
     verMais(dvd);
+    pause();
 }
 void editarFormatoAudio(DVD *dvd){
     cin.ignore();
@@ -740,8 +746,9 @@ void dvd::paraArq(vector<DVD> dvd){
     f.open("DVD.txt", ios::out);
     if(!f.is_open()) {throw runtime_error("ERRO\n");}
 
-    if(dvd.size() == 0) return;
-    for(int i = 0; i<dvd.size(); i++){
+    int tam = dvd.size();
+    if(tam == 0) return;
+    for(int i = 0; i<tam; i++){
         f << dvd[i].getArtista() << '\n';
         f << dvd[i].getTitulo() << '\n';
         f << dvd[i].getAno() << '\n';
@@ -770,11 +777,13 @@ void dvd::mostrarOrdenadoData(vector<DVD> v){
     int tam = aux.size();
     if(tam < 2){
         aux[0].print();
+        cout << "----------------------------------------\n";
+        pause();
         return;
     }
 
-    for(int i = 0; i < aux.size(); i++){
-        for(int j = i + 1; j < aux.size(); j++){
+    for(int i = 0; i < tam; i++){
+        for(int j = i + 1; j < tam; j++){
             if(aux[i].getAno() > aux[j].getAno()){
                 DVD auxiliar = aux[i];
                 aux[i] = aux[j];
@@ -782,8 +791,9 @@ void dvd::mostrarOrdenadoData(vector<DVD> v){
             }
         }
     }
-    for(int i = 0; i < aux.size(); i++){
+    for(int i = 0; i < tam; i++){
         aux[i].print();
+        cout << "----------------------------------------\n";
     }
     pause();
 }
@@ -795,10 +805,10 @@ void mostrarOrdenadoData(vector<CD> v, vector<DVD> d){
     cout << "\t- Midias por data (crescente) -\n";
     cout << "----------------------------------------\n";
     bool travaCD = 0, travaDVD = 0;
-    int i=0, j=0;
+    int i=0, j=0, tamCD = v.size(), tamDVD = d.size();
     //ordenando os vetores
-    for(int i = 0; i < v.size(); i++){
-        for(int j = i + 1; j < v.size(); j++){
+    for(i = 0; i < tamCD; i++){
+        for(j = i + 1; j < tamCD; j++){
             if(v[i].getAno() > v[j].getAno()){
                 CD auxiliar = v[i];
                 v[i] = v[j];
@@ -806,8 +816,8 @@ void mostrarOrdenadoData(vector<CD> v, vector<DVD> d){
             }
         }
     }
-    for(int i = 0; i < d.size(); i++){
-        for(int j = i + 1; j < d.size(); j++){
+    for(i = 0; i < tamDVD; i++){
+        for(j = i + 1; j < tamDVD; j++){
             if(d[i].getAno() > d[j].getAno()){
                 DVD auxiliar = d[i];
                 d[i] = d[j];
@@ -817,16 +827,20 @@ void mostrarOrdenadoData(vector<CD> v, vector<DVD> d){
     }
     i = 0; j = 0;
     while(1){
-        if(travaCD = 1 && travaDVD == 1) break;
+        if(travaCD == 1 && travaDVD == 1) break;
         if(v[i].getAno() < d[j].getAno() && travaCD == 0){
+            cout << "CD:\n";
             v[i].print();
+            cout << "----------------------------------------\n";
             i++;
-            if(i == v.size()) travaCD = 1;
+            if(i == tamCD) travaCD = 1;
         }
         else{
+            cout << "DVD:\n";
             d[j].print();
+            cout << "----------------------------------------\n";
             j++;
-            if(j == d.size()) travaDVD = 1;
+            if(j == tamDVD) travaDVD = 1;
         }
     }
 
@@ -866,7 +880,7 @@ void mostrarPorGenero(vector<CD> cd, vector<DVD> dvd){
     }
 
     cout << "CDs:\n";
-    for(int i = 0; i < generosCD.size(); i++){
+    for(int i = 0; i < tamGen; i++){
         cout << generosCD[i] << ":\n";
         for(int j = 0; j < tamCD; j++){
             if(cd[j].getGenero() == generosCD[i]) {cd[j].print();
@@ -895,22 +909,22 @@ void exibirKeywords(vector<CD> cd, vector<DVD> dvd){
     int tamCD = cd.size();
     for(int i = 1; i<tamCD; i++){
         vector<string> aux = cd[i].getPalavrasChave();
-        for(int j = 0; j < aux.size(); j++){
-            for(int k = 0; k<palavrasChaveCD.size(); k++){
+        for(int j = 0; j < (int) aux.size(); j++){
+            for(int k = 0; k< (int) palavrasChaveCD.size(); k++){
             if(aux[j] == palavrasChaveCD[k]) break;
             palavrasChaveCD.push_back(aux[j]);}
         }
     }
     tamCD = palavrasChaveCD.size();
-    for(int i = 0; i<dvd.size(); i++){
+    for(int i = 0; i<(int) dvd.size(); i++){
         vector<string> aux = dvd[i].getPalavrasChave();
-        for(int j = 0; j < aux.size(); j++){
+        for(int j = 0; j < (int) aux.size(); j++){
             for(int k = 0; k<tamCD; k++){
             if(aux[j] == palavrasChaveCD[k]) break;
             palavrasChaveCD.push_back(aux[j]);}
         }
     }
-    for(int i = 0; i < palavrasChaveCD.size(); i++){
+    for(int i = 0; i < (int) palavrasChaveCD.size(); i++){
         cout << palavrasChaveCD[i] << '\n';
     }
     pause();
