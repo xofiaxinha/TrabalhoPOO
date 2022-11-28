@@ -1,3 +1,5 @@
+#ifndef MAINFM_H
+#define MAINFM_H
 #pragma once
 #include <iostream>
 #include <vector>
@@ -29,3 +31,5 @@ void mostrarFaixasEmComum(CD cd, DVD dvd);
 void mostrarPorGenero(vector<CD> cd, vector<DVD> dvd);
 void exibirKeywords(vector<CD> cd, vector<DVD> dvd);
 void menu();
+
+#endif

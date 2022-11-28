@@ -45,6 +45,19 @@ void pause(){
     //cout << "----------------------------------------\n";
     system("clear");
 }
+void removeRepetido(vector<string> &v){
+    int tam = v.size();
+    //int cont = 0;
+    for(int i = 0; i < tam; i++){
+        for(int j = i + 1; j < tam; j++){
+            if(v[i] == v[j]){
+                v.erase(v.begin() + j);
+                tam--;
+                j--;
+            }
+        }
+    }
+}
 
 //funcoes auxiliares pra editar
 void editarArtista(Midia *m){
@@ -378,7 +391,8 @@ void cd::lista(vector<CD> cd){
     }
     cout << "----------------------------------------\n";
     verMais(cd);
-    pause();
+    system("clear");
+    //pause();
 }
 vector<CD> cd::lerArq(){
     vector<CD> cd;
@@ -616,7 +630,8 @@ void dvd::lista(vector<DVD> dvd){
         cout << i + 1 << ". " << dvd[i].getTitulo() << " por " << dvd[i].getArtista() << '\n';
     }
     verMais(dvd);
-    pause();
+    //pause();
+    system("clear");
 }
 void editarFormatoAudio(DVD *dvd){
     cin.ignore();
@@ -868,65 +883,72 @@ void mostrarPorGenero(vector<CD> cd, vector<DVD> dvd){
     cout << "----------------------------------------\n";
     cout << "    - Midia organizada por genero -\n";
     cout << "----------------------------------------\n";
-    vector<string> generosCD;
-    generosCD.push_back(cd[0].getGenero());
-    int tamCD = cd.size();
-    int tamGen = generosCD.size();
-    for(int i = 0; i < tamCD; i++){
-        for(int j = i + 1; j < tamGen; j++){
-            if(cd[i].getGenero() == generosCD[j]) break;
-            if(j == tamGen - 1) generosCD.push_back(cd[i].getGenero());
-        }
+    vector<string> generos;
+    generos.push_back(cd[0].getGenero());
+    int tamCD = cd.size(), tamDVD = dvd.size();
+    for(int i = 1; i<tamCD; i++){
+        generos.push_back(cd[i].getGenero());
     }
-
-    cout << "CDs:\n";
-    for(int i = 0; i < tamGen; i++){
-        cout << generosCD[i] << ":\n";
-        for(int j = 0; j < tamCD; j++){
-            if(cd[j].getGenero() == generosCD[i]) {cd[j].print();
-            cout << "----------------------------------------\n";}
-        }
+    removeRepetido(generos);
+    for(int i = 0; i<tamDVD; i++){
+        generos.push_back(dvd[i].getGenero());
     }
+    removeRepetido(generos);
 
-    vector<string> generosDVD;
-    generosDVD.push_back(dvd[0].getGenero());
-    int tamDVD = dvd.size();
-    int tamGenDVD = generosDVD.size();
-    for(int i = 0; i < tamDVD; i++){
-        for(int j = 0; j < tamGenDVD; j++){
-            if(dvd[i].getGenero() == generosDVD[j]) break;
-            if(j == tamGenDVD - 1) generosDVD.push_back(dvd[i].getGenero());
+    int tam = generos.size();
+    for(int i = 0; i<tam; i++){
+        cout << "Genero: " << generos[i] << '\n';
+        cout << "----------------------------------------\n";
+        for(int j = 0; j<tamCD; j++){
+            if(cd[j].getGenero() == generos[i]){
+                cout << "CD:\n";
+                cd[j].print();
+                cout << "----------------------------------------\n";
+            }
+        }
+        for(int j = 0; j<tamDVD; j++){
+            if(dvd[j].getGenero() == generos[i]){
+                cout << "DVD:\n";
+                dvd[j].print();
+                cout << "----------------------------------------\n";
+            }
         }
     }
     pause();
 }
+
 void exibirKeywords(vector<CD> cd, vector<DVD> dvd){
+    //função que pega todas as palavras chave uma vez só
     system("clear");
     cout << "----------------------------------------\n";
     cout << "\t- Keywords -\n";
     cout << "----------------------------------------\n";
-    vector<string> palavrasChaveCD = cd[0].getPalavrasChave();
+    vector<string> palavrasChave;
     int tamCD = cd.size();
-    for(int i = 1; i<tamCD; i++){
+    for(int i = 0; i < tamCD; i++){
         vector<string> aux = cd[i].getPalavrasChave();
-        for(int j = 0; j < (int) aux.size(); j++){
-            for(int k = 0; k< (int) palavrasChaveCD.size(); k++){
-            if(aux[j] == palavrasChaveCD[k]) break;
-            palavrasChaveCD.push_back(aux[j]);}
+        int tamAux = aux.size();
+        for(int j = 0; j < tamAux; j++){
+            palavrasChave.push_back(aux[j]);
         }
     }
-    tamCD = palavrasChaveCD.size();
-    for(int i = 0; i<(int) dvd.size(); i++){
+    removeRepetido(palavrasChave);
+
+    int tamDVD = dvd.size();
+    for(int i = 0; i < tamDVD; i++){
         vector<string> aux = dvd[i].getPalavrasChave();
-        for(int j = 0; j < (int) aux.size(); j++){
-            for(int k = 0; k<tamCD; k++){
-            if(aux[j] == palavrasChaveCD[k]) break;
-            palavrasChaveCD.push_back(aux[j]);}
+        int tamAux = aux.size();
+        for(int j = 0; j < tamAux; j++){
+            palavrasChave.push_back(aux[j]);
         }
     }
-    for(int i = 0; i < (int) palavrasChaveCD.size(); i++){
-        cout << palavrasChaveCD[i] << '\n';
+    removeRepetido(palavrasChave);
+
+    int tamPalavrasChave = palavrasChave.size();
+    for(int i = 0; i < tamPalavrasChave - 1; i++){
+        cout << '#' << palavrasChave[i] << ", ";
     }
+    cout << '#' << palavrasChave[tamPalavrasChave - 1] << '\n';
     pause();
 }
 void menu(){

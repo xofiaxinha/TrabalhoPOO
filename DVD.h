@@ -1,3 +1,5 @@
+#ifndef DVD_H
+#define DVD_H
 #pragma once
 #include <iostream>
 #include <string>
@@ -17,3 +19,4 @@ class DVD: public Midia{
         string getFormatoTela();
         void print();
 };
+#endif

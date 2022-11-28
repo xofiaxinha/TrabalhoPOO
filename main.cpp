@@ -114,10 +114,19 @@ int main(){
                 else cout << "Midia nao encontrada" << '\n';
             }
                 break;
-            case 7:
-                mostrarPorGenero(cd, dvd);
+            case 7:{
+                string nome;
+                bool key = false;
+                cout << "Digite o titulo da midia: ";
+                getline(cin, nome);
+                CD cdBuscado = cd::buscar(cd, nome, &key);
+                DVD dvdBuscado = dvd::buscar(dvd, nome, &key);
+                if(key) mostrarFaixasEmComum(cdBuscado, dvdBuscado);
+                else cout << "Midia nao encontrada" << '\n';
+            }
                 break;
             case 8:
+                mostrarPorGenero(cd, dvd);
                 break;
             case 9:
                 exibirKeywords(cd, dvd);

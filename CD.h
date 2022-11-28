@@ -1,3 +1,5 @@
+#ifndef CD_H
+#define CD_H
 #pragma once
 #include <iostream>
 #include <string>
@@ -19,3 +21,4 @@ class CD: public Midia{
         bool getColetanea();
         void print();
 };
+#endif 
