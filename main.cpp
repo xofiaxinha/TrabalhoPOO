@@ -4,7 +4,6 @@
 #include <cstdio>
 #include "MainFM.h"
 using namespace std;
-void pause();
 int main(){
     vector<CD> cd = cd::lerArq();
     vector<DVD> dvd = dvd::lerArq();
@@ -26,7 +25,6 @@ int main(){
                     dvd::add(&dvd);
                 else
                     cout << "Opcao invalida" << '\n';
-                cout << "----------------------------------------\n";
             }
               break;
 
@@ -51,13 +49,11 @@ int main(){
                 cout << "----------------------------------------\n";
                 cout << "DVDs disponíveis:" << '\n';
                 dvd::lista(dvd);
-                cout << "----------------------------------------\n";
-
             }
                 break;
             case 4:
                 {cout << "----------------------------------------\n";
-                cout << "Deseja ver as midias?";
+                cout << "Deseja ver as midias?\n";
                 cout << "1 - Sim" << '\n';
                 cout << "2 - Nao" << '\n';
                 int op;
@@ -69,7 +65,6 @@ int main(){
                     cout << "----------------------------------------\n";
                     cout << "DVDs disponíveis:" << '\n';
                     dvd::lista(dvd);
-                    cout << "----------------------------------------\n";
                     op = 2;}
                 if(op == 2){
                     cout << "----------------------------------------\n";
@@ -100,10 +95,10 @@ int main(){
                 else if(op == 2) dvd::mostrarOrdenadoData(dvd);
                 else if(op == 3)mostrarOrdenadoData(cd, dvd);
                 else
-                    cout << "Opcao invalida" << '\n';
-                cout << "----------------------------------------\n";}
+                    cout << "Opcao invalida" << '\n';}
                 break;
             case 6:{
+                cin.ignore();
                 string nome;
                 bool key = false;
                 cout << "Digite o titulo da midia: ";
@@ -114,21 +109,10 @@ int main(){
                 else cout << "Midia nao encontrada" << '\n';
             }
                 break;
-            case 7:{
-                string nome;
-                bool key = false;
-                cout << "Digite o titulo da midia: ";
-                getline(cin, nome);
-                CD cdBuscado = cd::buscar(cd, nome, &key);
-                DVD dvdBuscado = dvd::buscar(dvd, nome, &key);
-                if(key) mostrarFaixasEmComum(cdBuscado, dvdBuscado);
-                else cout << "Midia nao encontrada" << '\n';
-            }
-                break;
-            case 8:
+            case 7:
                 mostrarPorGenero(cd, dvd);
                 break;
-            case 9:
+            case 8:
                 exibirKeywords(cd, dvd);
                 break;
             default:
